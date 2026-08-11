@@ -1523,6 +1523,7 @@
         );
 
 
+
     form.addEventListener(
         "submit",
         function(event) {
@@ -1531,7 +1532,7 @@
 
 
             /* ------------------------------------------
-               RECUPERATION
+               RECUPERATION DES INFORMATIONS
             ------------------------------------------ */
 
             const nom =
@@ -1692,7 +1693,7 @@
 
 
             /* ------------------------------------------
-               CONFIRMATION
+               CONFIRMATION MOT DE PASSE
             ------------------------------------------ */
 
             if (
@@ -1727,9 +1728,9 @@
 
 
 
-            /* ------------------------------------------
+            /* ==================================================
                RESERVATION
-            ------------------------------------------ */
+            ================================================== */
 
             reserveButton.disabled = true;
 
@@ -1740,20 +1741,30 @@
             `;
 
 
-            /*
-                Ici, tu pourras connecter le formulaire
-                à ton PHP + MySQL.
 
-                Pour le moment, simulation.
-            */
+            /* ==================================================
+               SIMULATION DE RESERVATION
+               
+               PLUS TARD :
+               PHP + MySQL
+            ================================================== */
 
             setTimeout(
                 function() {
+
+
+                    /* --------------------------------------
+                       MESSAGE DE SUCCES
+                    -------------------------------------- */
 
                     showSuccess(
                         "Votre demande de réservation a été enregistrée avec succès."
                     );
 
+
+                    /* --------------------------------------
+                       MODIFIER LE BOUTON
+                    -------------------------------------- */
 
                     reserveButton.innerHTML = `
                         <i class="fa-solid fa-check"></i>
@@ -1761,12 +1772,58 @@
                     `;
 
 
-                    /*
-                        Redirection éventuelle :
 
-                        window.location.href =
-                            "confirmation.html";
-                    */
+                    /* ==================================================
+                       SAUVEGARDE DES INFORMATIONS
+                       
+                       OPTIONNEL POUR LA SUITE
+                    ================================================== */
+
+                    localStorage.setItem(
+                        "bmj_reservation",
+                        "true"
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_nom",
+                        nom
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_prenom",
+                        prenom
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_email",
+                        email
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_telephone",
+                        telephone
+                    );
+
+
+
+                    /* ==================================================
+                       REDIRECTION VERS CONFIRMATION
+                    ================================================== */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "confirmation.html";
+
+                        },
+                        800
+                    );
+
 
                 },
                 1200
@@ -1805,7 +1862,6 @@
 
 
 </script>
-
 
 </body>
 
