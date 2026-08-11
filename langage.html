@@ -1,0 +1,1882 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Choisir votre langage — BMJ SERVICE</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family: "Poppins", sans-serif;
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            background: #07121d;
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+
+        /* ==================================================
+           PAGE
+        ================================================== */
+
+        .language-page {
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+
+            background: #07121d;
+        }
+
+
+        /* ==================================================
+           IMAGE
+        ================================================== */
+
+        .language-image {
+
+            width: 38%;
+
+            min-height: 100vh;
+
+            position: relative;
+
+            background-image:
+
+                linear-gradient(
+                    135deg,
+                    rgba(3,13,23,0.30),
+                    rgba(3,13,23,0.88)
+                ),
+
+                url("images/background.jpeg");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 55px;
+
+            overflow: hidden;
+
+            animation: imageAppear 1s ease forwards;
+        }
+
+
+        /* LUMIERE */
+
+        .language-image::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(242,201,76,0.10);
+
+            filter: blur(90px);
+
+            top: 10%;
+
+            left: -120px;
+        }
+
+
+        /* ==================================================
+           TEXTE IMAGE
+        ================================================== */
+
+        .image-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 480px;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 0.9s ease 0.3s forwards;
+        }
+
+
+        .image-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 14px;
+
+            margin-bottom: 18px;
+
+            border-radius: 30px;
+
+            border:
+                1px solid
+                rgba(242,201,76,0.45);
+
+            background:
+                rgba(242,201,76,0.09);
+
+            color: #f2c94c;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+        }
+
+
+        .image-content h1 {
+
+            font-size:
+                clamp(32px,4vw,58px);
+
+            line-height: 1.1;
+
+            font-weight: 800;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .image-content h1 span {
+
+            color: #f2c94c;
+        }
+
+
+        .image-content p {
+
+            color:
+                rgba(255,255,255,0.75);
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        /* ==================================================
+           PARTIE DROITE
+        ================================================== */
+
+        .language-content {
+
+            width: 62%;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding:
+                40px 7%;
+
+            background:
+
+                radial-gradient(
+                    circle at top right,
+                    rgba(20,90,134,0.16),
+                    transparent 38%
+                ),
+
+                #07121d;
+        }
+
+
+        /* ==================================================
+           LOGO
+        ================================================== */
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 35px;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 0.8s ease 0.1s forwards;
+        }
+
+
+        .logo img {
+
+            width: 42px;
+
+            height: 42px;
+
+            object-fit: contain;
+
+            border-radius: 9px;
+        }
+
+
+        .logo h2 {
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+
+        .logo span {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           TITRE
+        ================================================== */
+
+        .content-header {
+
+            margin-bottom: 28px;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 0.8s ease 0.3s forwards;
+        }
+
+
+        .small-title {
+
+            color: #f2c94c;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 9px;
+        }
+
+
+        .content-header h2 {
+
+            font-size:
+                clamp(28px,3vw,42px);
+
+            line-height: 1.2;
+
+            margin-bottom: 10px;
+        }
+
+
+        .content-header p {
+
+            max-width: 650px;
+
+            color:
+                rgba(255,255,255,0.55);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ==================================================
+           CARTES LANGAGES
+        ================================================== */
+
+        .languages-grid {
+
+            width: 100%;
+
+            max-width: 750px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 13px;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 0.8s ease 0.5s forwards;
+        }
+
+
+        /* ==================================================
+           CARTE
+        ================================================== */
+
+        .language-card {
+
+            position: relative;
+
+            min-height: 105px;
+
+            padding: 17px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                border 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .language-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(242,201,76,0.45);
+
+            background:
+                rgba(255,255,255,0.06);
+        }
+
+
+        /* INPUT CACHE */
+
+        .language-card input {
+
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        /* ==================================================
+           ICONE
+        ================================================== */
+
+        .language-icon {
+
+            width: 39px;
+
+            height: 39px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                rgba(242,201,76,0.10);
+
+            color: #f2c94c;
+
+            font-size: 17px;
+
+            margin-bottom: 10px;
+
+            transition: 0.25s ease;
+        }
+
+
+        .language-card h3 {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 3px;
+        }
+
+
+        .language-card p {
+
+            color:
+                rgba(255,255,255,0.42);
+
+            font-size: 9px;
+
+            line-height: 1.4;
+        }
+
+
+        /* ==================================================
+           CARTE SELECTIONNEE
+        ================================================== */
+
+        .language-card.selected {
+
+            border-color:
+                #f2c94c;
+
+            background:
+                rgba(242,201,76,0.08);
+
+            box-shadow:
+                0 10px 30px
+                rgba(242,201,76,0.08);
+        }
+
+
+        .language-card.selected
+        .language-icon {
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            transform:
+                scale(1.05);
+        }
+
+
+        /* CHECK */
+
+        .check {
+
+            position: absolute;
+
+            top: 12px;
+
+            right: 12px;
+
+            width: 21px;
+
+            height: 21px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            font-size: 10px;
+
+            opacity: 0;
+
+            transform: scale(0.5);
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .language-card.selected
+        .check {
+
+            opacity: 1;
+
+            transform: scale(1);
+        }
+
+
+        /* ==================================================
+           LANGAGE SELECTIONNE
+        ================================================== */
+
+        .selected-language {
+
+            max-width: 750px;
+
+            margin-top: 18px;
+
+            min-height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color:
+                rgba(255,255,255,0.52);
+
+            font-size: 11px;
+        }
+
+
+        .selected-language strong {
+
+            color: #f2c94c;
+        }
+
+
+        .selected-language i {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           BOUTON WHATSAPP
+        ================================================== */
+
+        .join-button {
+
+            width: 100%;
+
+            max-width: 750px;
+
+            height: 54px;
+
+            margin-top: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            color:
+                rgba(255,255,255,0.35);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            cursor: not-allowed;
+
+            transition:
+                0.3s ease;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 0.8s ease 0.7s forwards;
+        }
+
+
+        /* BOUTON ACTIF */
+
+        .join-button.active {
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 35px
+                rgba(242,201,76,0.18);
+        }
+
+
+        .join-button.active:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 18px 42px
+                rgba(242,201,76,0.30);
+        }
+
+
+        /* ==================================================
+           MESSAGE
+        ================================================== */
+
+        .warning-message {
+
+            max-width: 750px;
+
+            margin-top: 10px;
+
+            color:
+                rgba(255,255,255,0.38);
+
+            font-size: 9px;
+
+            text-align: center;
+        }
+
+
+        /* ==================================================
+           RETOUR
+        ================================================== */
+
+        .back-link {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 18px;
+
+            color:
+                rgba(255,255,255,0.40);
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .back-link:hover {
+
+            color: white;
+        }
+
+
+        .back-link i {
+
+            margin-right: 7px;
+        }
+
+
+        /* ==================================================
+           ANIMATIONS
+        ================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes imageAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(1.04);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1);
+            }
+        }
+
+
+        /* ==================================================
+           TABLETTE
+        ================================================== */
+
+        @media (max-width: 950px) {
+
+            .language-page {
+
+                flex-direction: column;
+            }
+
+
+            .language-image {
+
+                width: 100%;
+
+                min-height: 300px;
+
+                max-height: 350px;
+
+                padding:
+                    35px 7%;
+            }
+
+
+            .language-content {
+
+                width: 100%;
+
+                min-height: auto;
+
+                padding:
+                    45px 7%;
+            }
+
+
+            .languages-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 600px) {
+
+            .language-image {
+
+                min-height: 245px;
+
+                max-height: 245px;
+
+                padding:
+                    28px 20px;
+
+                background-position:
+                    center center;
+            }
+
+
+            .image-label {
+
+                font-size: 8px;
+
+                padding: 6px 10px;
+
+                margin-bottom: 12px;
+            }
+
+
+            .image-content h1 {
+
+                font-size: 28px;
+
+                letter-spacing: -0.8px;
+
+                margin-bottom: 9px;
+            }
+
+
+            .image-content p {
+
+                font-size: 10px;
+
+                line-height: 1.6;
+            }
+
+
+            .language-content {
+
+                padding:
+                    28px 18px 40px;
+            }
+
+
+            .logo {
+
+                margin-bottom: 25px;
+            }
+
+
+            .logo img {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+
+            .logo h2 {
+
+                font-size: 18px;
+            }
+
+
+            .content-header {
+
+                margin-bottom: 20px;
+            }
+
+
+            .small-title {
+
+                font-size: 8px;
+            }
+
+
+            .content-header h2 {
+
+                font-size: 25px;
+            }
+
+
+            .content-header p {
+
+                font-size: 10px;
+
+                line-height: 1.6;
+            }
+
+
+            .languages-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+
+            .language-card {
+
+                min-height: 105px;
+
+                padding: 14px;
+            }
+
+
+            .language-icon {
+
+                width: 35px;
+
+                height: 35px;
+
+                font-size: 15px;
+
+                margin-bottom: 8px;
+            }
+
+
+            .language-card h3 {
+
+                font-size: 12px;
+            }
+
+
+            .language-card p {
+
+                font-size: 8px;
+            }
+
+
+            .selected-language {
+
+                font-size: 10px;
+
+                margin-top: 12px;
+            }
+
+
+            .join-button {
+
+                height: 52px;
+
+                margin-top: 10px;
+
+                font-size: 12px;
+            }
+
+
+            .warning-message {
+
+                font-size: 8px;
+
+                line-height: 1.5;
+            }
+        }
+
+
+        /* ==================================================
+           PETIT MOBILE
+        ================================================== */
+
+        @media (max-width: 380px) {
+
+            .language-image {
+
+                min-height: 220px;
+
+                max-height: 220px;
+            }
+
+
+            .image-content h1 {
+
+                font-size: 25px;
+            }
+
+
+            .languages-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .language-card {
+
+                min-height: 85px;
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 12px;
+            }
+
+
+            .language-icon {
+
+                flex-shrink: 0;
+
+                margin-bottom: 0;
+            }
+
+
+            .language-card h3 {
+
+                margin-bottom: 2px;
+            }
+        }
+
+
+        /* ==================================================
+           REDUCTION DES ANIMATIONS
+        ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     PAGE CHOIX LANGAGE
+================================================== -->
+
+<div class="language-page">
+
+
+    <!-- ==================================================
+         IMAGE
+    ================================================== -->
+
+    <section class="language-image">
+
+
+        <div class="image-content">
+
+
+            <div class="image-label">
+
+                <i class="fa-solid fa-code"></i>
+
+                PROGRAMMATION
+
+            </div>
+
+
+            <h1>
+
+                Choisissez votre
+                <span>langage.</span>
+
+            </h1>
+
+
+            <p>
+
+                Sélectionnez le langage de programmation
+                que vous souhaitez apprendre afin de
+                rejoindre votre communauté d'apprentissage.
+
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==================================================
+         CONTENU
+    ================================================== -->
+
+    <section class="language-content">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img
+                src="images/logo.png"
+                alt="BMJ SERVICE"
+            >
+
+            <h2>
+                BMJ <span>SERVICE</span>
+            </h2>
+
+        </div>
+
+
+
+        <!-- TITRE -->
+
+        <div class="content-header">
+
+            <div class="small-title">
+
+                Votre parcours
+
+            </div>
+
+
+            <h2>
+
+                Quel langage voulez-vous apprendre ?
+
+            </h2>
+
+
+            <p>
+
+                Choisissez un seul langage pour commencer.
+                Votre sélection sera enregistrée avant
+                de pouvoir intégrer le groupe d'apprentissage.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             LANGAGES
+        ================================================== -->
+
+        <div class="languages-grid">
+
+
+            <!-- PYTHON -->
+
+            <label
+                class="language-card"
+                data-language="Python"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="Python"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-brands fa-python"></i>
+
+                </div>
+
+
+                <h3>
+                    Python
+                </h3>
+
+
+                <p>
+                    Développement & IA
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- JAVASCRIPT -->
+
+            <label
+                class="language-card"
+                data-language="JavaScript"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="JavaScript"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-brands fa-js"></i>
+
+                </div>
+
+
+                <h3>
+                    JavaScript
+                </h3>
+
+
+                <p>
+                    Web & applications
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- JAVA -->
+
+            <label
+                class="language-card"
+                data-language="Java"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="Java"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-brands fa-java"></i>
+
+                </div>
+
+
+                <h3>
+                    Java
+                </h3>
+
+
+                <p>
+                    Applications & Android
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- PHP -->
+
+            <label
+                class="language-card"
+                data-language="PHP"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="PHP"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-brands fa-php"></i>
+
+                </div>
+
+
+                <h3>
+                    PHP
+                </h3>
+
+
+                <p>
+                    Backend & Web
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- C -->
+
+            <label
+                class="language-card"
+                data-language="C"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="C"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-solid fa-c"></i>
+
+                </div>
+
+
+                <h3>
+                    C
+                </h3>
+
+
+                <p>
+                    Programmation système
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- C++ -->
+
+            <label
+                class="language-card"
+                data-language="C++"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="C++"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-solid fa-code"></i>
+
+                </div>
+
+
+                <h3>
+                    C++
+                </h3>
+
+
+                <p>
+                    Logiciels & jeux
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- C# -->
+
+            <label
+                class="language-card"
+                data-language="C#"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="C#"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-solid fa-hashtag"></i>
+
+                </div>
+
+
+                <h3>
+                    C#
+                </h3>
+
+
+                <p>
+                    .NET & applications
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- HTML / CSS -->
+
+            <label
+                class="language-card"
+                data-language="HTML/CSS"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="HTML/CSS"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-brands fa-html5"></i>
+
+                </div>
+
+
+                <h3>
+                    HTML / CSS
+                </h3>
+
+
+                <p>
+                    Création de sites web
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- KOTLIN -->
+
+            <label
+                class="language-card"
+                data-language="Kotlin"
+            >
+
+                <input
+                    type="radio"
+                    name="language"
+                    value="Kotlin"
+                >
+
+
+                <div class="language-icon">
+
+                    <i class="fa-solid fa-mobile-screen"></i>
+
+                </div>
+
+
+                <h3>
+                    Kotlin
+                </h3>
+
+
+                <p>
+                    Android & applications
+                </p>
+
+
+                <div class="check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- ==================================================
+             LANGAGE SELECTIONNE
+        ================================================== -->
+
+        <div
+            class="selected-language"
+            id="selectedLanguage"
+        >
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <span>
+                Aucun langage sélectionné
+            </span>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             BOUTON
+        ================================================== -->
+
+        <button
+            type="button"
+            class="join-button"
+            id="joinButton"
+            disabled
+        >
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            <span>
+                Intégrer le groupe
+            </span>
+
+        </button>
+
+
+        <p class="warning-message">
+
+            Vous devez sélectionner un langage
+            de programmation avant de rejoindre le groupe.
+
+        </p>
+
+
+
+        <!-- RETOUR -->
+
+        <a
+            href="index.html"
+            class="back-link"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Retour à l'accueil
+
+        </a>
+
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+
+    /* ==================================================
+       ELEMENTS
+    ================================================== */
+
+    const cards =
+        document.querySelectorAll(
+            ".language-card"
+        );
+
+
+    const joinButton =
+        document.getElementById(
+            "joinButton"
+        );
+
+
+    const selectedLanguage =
+        document.getElementById(
+            "selectedLanguage"
+        );
+
+
+    /* ==================================================
+       LIEN WHATSAPP
+    ================================================== */
+
+    const whatsappGroup =
+        "https://chat.whatsapp.com/KAOkVMUbADW0NOXkQDuuwU?mode=gi_t";
+
+
+    /* ==================================================
+       CHARGER LE CHOIX EXISTANT
+    ================================================== */
+
+    const savedLanguage =
+        localStorage.getItem(
+            "bmj_language"
+        );
+
+
+    if (savedLanguage) {
+
+        selectLanguage(
+            savedLanguage,
+            false
+        );
+
+    }
+
+
+    /* ==================================================
+       SELECTION DES CARTES
+    ================================================== */
+
+    cards.forEach(
+        function(card) {
+
+            card.addEventListener(
+                "click",
+                function() {
+
+                    const language =
+                        card.dataset.language;
+
+
+                    selectLanguage(
+                        language,
+                        true
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* ==================================================
+       SELECTION LANGAGE
+    ================================================== */
+
+    function selectLanguage(
+        language,
+        save
+    ) {
+
+
+        /* ----------------------------------------------
+           RETIRER LES ANCIENNES SELECTIONS
+        ---------------------------------------------- */
+
+        cards.forEach(
+            function(card) {
+
+                card.classList.remove(
+                    "selected"
+                );
+
+
+                const input =
+                    card.querySelector(
+                        "input"
+                    );
+
+                input.checked = false;
+
+            }
+        );
+
+
+        /* ----------------------------------------------
+           TROUVER LA CARTE
+        ---------------------------------------------- */
+
+        const selectedCard =
+            document.querySelector(
+                `[data-language="${language}"]`
+            );
+
+
+        if (!selectedCard) {
+
+            return;
+        }
+
+
+        /* ----------------------------------------------
+           ACTIVER
+        ---------------------------------------------- */
+
+        selectedCard.classList.add(
+            "selected"
+        );
+
+
+        const input =
+            selectedCard.querySelector(
+                "input"
+            );
+
+        input.checked = true;
+
+
+        /* ----------------------------------------------
+           TEXTE
+        ---------------------------------------------- */
+
+        selectedLanguage.innerHTML = `
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                Langage sélectionné :
+                <strong>${language}</strong>
+            </span>
+
+        `;
+
+
+        /* ----------------------------------------------
+           ACTIVER BOUTON
+        ---------------------------------------------- */
+
+        joinButton.disabled = false;
+
+        joinButton.classList.add(
+            "active"
+        );
+
+
+        /* ----------------------------------------------
+           SAUVEGARDER
+        ---------------------------------------------- */
+
+        if (save) {
+
+            localStorage.setItem(
+                "bmj_language",
+                language
+            );
+
+        }
+
+    }
+
+
+    /* ==================================================
+       BOUTON WHATSAPP
+    ================================================== */
+
+    joinButton.addEventListener(
+        "click",
+        function() {
+
+
+            /* SECURITE */
+
+            const language =
+                localStorage.getItem(
+                    "bmj_language"
+                );
+
+
+            /* ------------------------------------------
+               AUCUN LANGAGE
+            ------------------------------------------ */
+
+            if (!language) {
+
+                alert(
+                    "Veuillez d'abord choisir un langage de programmation."
+                );
+
+                return;
+            }
+
+
+            /* ------------------------------------------
+               CONFIRMATION
+            ------------------------------------------ */
+
+            const confirmation =
+                confirm(
+                    "Vous avez choisi " +
+                    language +
+                    ".\n\n" +
+                    "Voulez-vous intégrer le groupe WhatsApp ?"
+                );
+
+
+            if (!confirmation) {
+
+                return;
+            }
+
+
+            /* ------------------------------------------
+               REDIRECTION
+            ------------------------------------------ */
+
+            window.location.href =
+                whatsappGroup;
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
