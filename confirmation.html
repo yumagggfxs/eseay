@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Réservation confirmée — BMJ SERVICE</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+
+            font-family: "Poppins", sans-serif;
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            background: #07121d;
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+
+        /* ==================================================
+           PAGE
+        ================================================== */
+
+        .success-page {
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            padding: 30px;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(20, 90, 134, 0.16),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(242, 201, 76, 0.06),
+                    transparent 30%
+                ),
+
+                #07121d;
+        }
+
+
+        /* ==================================================
+           LUMIERE DECORATIVE
+        ================================================== */
+
+        .success-page::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 320px;
+
+            height: 320px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(242, 201, 76, 0.06);
+
+            filter: blur(100px);
+
+            top: -100px;
+
+            right: -100px;
+
+            pointer-events: none;
+        }
+
+
+        .success-page::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+
+            height: 250px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(20, 90, 134, 0.08);
+
+            filter: blur(90px);
+
+            bottom: -80px;
+
+            left: -80px;
+
+            pointer-events: none;
+        }
+
+
+        /* ==================================================
+           CARTE
+        ================================================== */
+
+        .success-card {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+            max-width: 650px;
+
+            padding:
+                48px 50px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.09);
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,0.30);
+
+            opacity: 0;
+
+            animation:
+                cardAppear 0.9s ease 0.1s forwards;
+        }
+
+
+        /* ==================================================
+           LOGO
+        ================================================== */
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .logo img {
+
+            width: 43px;
+
+            height: 43px;
+
+            object-fit: contain;
+
+            border-radius: 9px;
+        }
+
+
+        .logo h2 {
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+
+        .logo span {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           CERCLE SUCCES
+        ================================================== */
+
+        .success-icon {
+
+            width: 100px;
+
+            height: 100px;
+
+            margin: 0 auto 28px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            color: #f2c94c;
+
+            background:
+                rgba(242,201,76,0.09);
+
+            border:
+                1px solid
+                rgba(242,201,76,0.40);
+
+            font-size: 40px;
+
+            transform: scale(0);
+
+            animation:
+                iconAppear 0.8s
+                cubic-bezier(.17,.67,.35,1.3)
+                0.65s forwards;
+        }
+
+
+        .success-icon::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -10px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(242,201,76,0.12);
+
+            animation:
+                pulse 2.5s ease-in-out
+                infinite;
+        }
+
+
+        /* ==================================================
+           PETIT TITRE
+        ================================================== */
+
+        .small-title {
+
+            color: #f2c94c;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 11px;
+        }
+
+
+        /* ==================================================
+           TITRE
+        ================================================== */
+
+        .success-card h1 {
+
+            font-size:
+                clamp(27px,4vw,43px);
+
+            line-height: 1.2;
+
+            font-weight: 700;
+
+            margin-bottom: 17px;
+        }
+
+
+        .success-card h1 span {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           MESSAGE
+        ================================================== */
+
+        .success-message {
+
+            max-width: 520px;
+
+            margin: 0 auto;
+
+            color:
+                rgba(255,255,255,0.60);
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        .success-message strong {
+
+            color:
+                rgba(255,255,255,0.90);
+
+            font-weight: 600;
+        }
+
+
+        /* ==================================================
+           MESSAGE PATIENCE
+        ================================================== */
+
+        .waiting {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            min-height: 52px;
+
+            margin:
+                28px auto 0;
+
+            padding:
+                12px 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            color:
+                rgba(255,255,255,0.52);
+
+            font-size: 11px;
+        }
+
+
+        .waiting i {
+
+            color: #f2c94c;
+
+            animation:
+                rotate 1.5s linear infinite;
+        }
+
+
+        /* ==================================================
+           BOUTON
+        ================================================== */
+
+        .later-button {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            height: 53px;
+
+            margin:
+                16px auto 0;
+
+            border:
+                1px solid
+                rgba(242,201,76,0.55);
+
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: #f2c94c;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            transition:
+                0.3s ease;
+        }
+
+
+        .later-button:hover {
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(242,201,76,0.18);
+        }
+
+
+        .later-button:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* ==================================================
+           TEXTE BAS
+        ================================================== */
+
+        .bottom-text {
+
+            margin-top: 20px;
+
+            color:
+                rgba(255,255,255,0.28);
+
+            font-size: 9px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           ANIMATIONS
+        ================================================== */
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes iconAppear {
+
+            0% {
+
+                transform:
+                    scale(0);
+            }
+
+            70% {
+
+                transform:
+                    scale(1.12);
+            }
+
+            100% {
+
+                transform:
+                    scale(1);
+            }
+        }
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(1);
+
+                opacity: 0.7;
+            }
+
+            50% {
+
+                transform:
+                    scale(1.08);
+
+                opacity: 0.15;
+            }
+        }
+
+
+        @keyframes rotate {
+
+            from {
+
+                transform:
+                    rotate(0deg);
+            }
+
+            to {
+
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+
+        /* ==================================================
+           TABLETTE
+        ================================================== */
+
+        @media (max-width: 700px) {
+
+            .success-page {
+
+                padding: 20px;
+            }
+
+
+            .success-card {
+
+                padding:
+                    40px 30px;
+
+                border-radius: 18px;
+            }
+
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 500px) {
+
+            .success-page {
+
+                padding:
+                    15px;
+            }
+
+
+            .success-card {
+
+                padding:
+                    35px 20px;
+
+                border-radius: 16px;
+            }
+
+
+            .logo {
+
+                margin-bottom: 28px;
+            }
+
+
+            .logo img {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+
+            .logo h2 {
+
+                font-size: 18px;
+            }
+
+
+            .success-icon {
+
+                width: 78px;
+
+                height: 78px;
+
+                font-size: 31px;
+
+                margin-bottom: 23px;
+            }
+
+
+            .small-title {
+
+                font-size: 8px;
+
+                letter-spacing: 1.4px;
+            }
+
+
+            .success-card h1 {
+
+                font-size: 25px;
+
+                margin-bottom: 13px;
+            }
+
+
+            .success-message {
+
+                font-size: 11px;
+
+                line-height: 1.7;
+            }
+
+
+            .waiting {
+
+                margin-top: 22px;
+
+                min-height: 48px;
+
+                padding: 11px;
+
+                font-size: 9px;
+            }
+
+
+            .later-button {
+
+                height: 50px;
+
+                font-size: 11px;
+
+                margin-top: 13px;
+            }
+
+
+            .bottom-text {
+
+                font-size: 8px;
+
+                margin-top: 16px;
+            }
+        }
+
+
+        /* ==================================================
+           PETIT TELEPHONE
+        ================================================== */
+
+        @media (max-width: 370px) {
+
+            .success-card {
+
+                padding:
+                    30px 16px;
+            }
+
+
+            .success-card h1 {
+
+                font-size: 23px;
+            }
+
+
+            .success-message {
+
+                font-size: 10px;
+            }
+
+
+            .success-icon {
+
+                width: 70px;
+
+                height: 70px;
+
+                font-size: 27px;
+            }
+        }
+
+
+        /* ==================================================
+           REDUCTION DES ANIMATIONS
+        ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     PAGE SUCCES
+================================================== -->
+
+<main class="success-page">
+
+
+    <section class="success-card">
+
+
+        <!-- ==================================================
+             LOGO
+        ================================================== -->
+
+        <div class="logo">
+
+            <img
+                src="images/logo.png"
+                alt="BMJ SERVICE"
+            >
+
+            <h2>
+
+                BMJ <span>SERVICE</span>
+
+            </h2>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             ICONE
+        ================================================== -->
+
+        <div class="success-icon">
+
+            <i class="fa-solid fa-check"></i>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             TITRE
+        ================================================== -->
+
+        <div class="small-title">
+
+            Réservation confirmée
+
+        </div>
+
+
+        <h1>
+
+            Merci !
+            <br>
+
+            Votre place est
+            <span>réservée avec succès.</span>
+
+        </h1>
+
+
+
+        <!-- ==================================================
+             MESSAGE
+        ================================================== -->
+
+        <p class="success-message">
+
+            Nous avons bien reçu votre demande.
+
+            <strong>
+                Votre place est maintenant réservée.
+            </strong>
+
+            Veuillez patienter un moment pendant
+            que nous préparons votre accès à votre
+            parcours d'apprentissage professionnel.
+
+        </p>
+
+
+
+        <!-- ==================================================
+             ATTENTE
+        ================================================== -->
+
+        <div class="waiting">
+
+            <i class="fa-solid fa-spinner"></i>
+
+            <span>
+                Veuillez patienter un moment...
+            </span>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             BOUTON
+        ================================================== -->
+
+        <button
+            type="button"
+            class="later-button"
+            id="laterButton"
+        >
+
+            <i class="fa-solid fa-clock"></i>
+
+            <span>
+                Revenir plus tard
+            </span>
+
+        </button>
+
+
+
+        <!-- ==================================================
+             TEXTE BAS
+        ================================================== -->
+
+        <p class="bottom-text">
+
+            Vous pourrez revenir sur BMJ SERVICE
+            ultérieurement pour poursuivre votre parcours.
+
+        </p>
+
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+    /* ==================================================
+       REVENIR PLUS TARD
+    ================================================== */
+
+    document
+        .getElementById("laterButton")
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+</html>
