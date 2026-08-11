@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BMJ SERVICE — Apprentissage professionnel</title>
+
+    <!-- GOOGLE FONT -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: "Poppins", sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #07121d;
+        }
+
+
+        /* ==================================================
+           PAGE ACCUEIL
+        ================================================== */
+
+        .hero {
+
+            position: relative;
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+            flex-direction: column;
+
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(3, 13, 23, 0.92) 0%,
+                    rgba(3, 13, 23, 0.72) 45%,
+                    rgba(3, 13, 23, 0.35) 100%
+                ),
+                url("images/background.jpeg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+        /* ==================================================
+           HEADER
+        ================================================== */
+
+        header {
+
+            width: 100%;
+
+            padding: 22px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: relative;
+            z-index: 10;
+
+            animation: headerDown 1s ease forwards;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            text-decoration: none;
+        }
+
+
+        .logo img {
+
+            width: 48px;
+            height: 48px;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+        }
+
+
+        .logo h2 {
+
+            color: white;
+
+            font-size: 22px;
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .logo h2 span {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           NAVIGATION
+        ================================================== */
+
+        nav {
+
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+
+        nav a {
+
+            position: relative;
+
+            color: rgba(255,255,255,0.9);
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.3s ease;
+        }
+
+
+        nav a::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: -7px;
+
+            width: 0;
+            height: 2px;
+
+            background: #f2c94c;
+
+            transition: 0.3s ease;
+        }
+
+
+        nav a:hover {
+
+            color: #f2c94c;
+        }
+
+
+        nav a:hover::after {
+
+            width: 100%;
+        }
+
+
+        /* ==================================================
+           BOUTON CONNEXION
+        ================================================== */
+
+        .login-btn {
+
+            padding: 10px 20px;
+
+            border: 1px solid rgba(255,255,255,0.4);
+
+            border-radius: 30px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            backdrop-filter: blur(10px);
+
+            transition: 0.3s ease;
+        }
+
+
+        .login-btn:hover {
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            border-color: #f2c94c;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ==================================================
+           MENU MOBILE
+        ================================================== */
+
+        .menu-btn {
+
+            display: none;
+
+            width: 43px;
+            height: 43px;
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.08);
+
+            color: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+
+
+        /* ==================================================
+           CONTENU HERO
+        ================================================== */
+
+        .hero-content {
+
+            flex: 1;
+
+            width: 100%;
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 70px 6% 100px;
+
+            display: flex;
+            align-items: center;
+        }
+
+
+        .hero-text {
+
+            width: 650px;
+        }
+
+
+        /* PETIT LABEL */
+
+        .welcome {
+
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 15px;
+
+            margin-bottom: 22px;
+
+            border: 1px solid rgba(242,201,76,0.4);
+
+            border-radius: 30px;
+
+            background: rgba(242,201,76,0.08);
+
+            color: #f2c94c;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            letter-spacing: 1px;
+
+            opacity: 0;
+
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+
+
+        .welcome i {
+
+            font-size: 11px;
+        }
+
+
+        /* TITRE */
+
+        .hero-title {
+
+            color: white;
+
+            font-size: clamp(42px, 5.5vw, 78px);
+
+            line-height: 1.08;
+
+            font-weight: 800;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+
+            opacity: 0;
+
+            animation: fadeUp 1s ease 0.6s forwards;
+        }
+
+
+        .hero-title span {
+
+            color: #f2c94c;
+
+            display: block;
+        }
+
+
+        /* DESCRIPTION */
+
+        .hero-description {
+
+            max-width: 620px;
+
+            color: rgba(255,255,255,0.78);
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
+            margin-bottom: 35px;
+
+            opacity: 0;
+
+            animation: fadeUp 1s ease 0.9s forwards;
+        }
+
+
+        /* ==================================================
+           BOUTONS
+        ================================================== */
+
+        .hero-buttons {
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            opacity: 0;
+
+            animation: fadeUp 1s ease 1.2s forwards;
+        }
+
+
+        .primary-btn {
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            min-width: 200px;
+
+            padding: 15px 24px;
+
+            border-radius: 10px;
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            box-shadow:
+                0 12px 35px rgba(242,201,76,0.22);
+
+            transition: 0.3s ease;
+        }
+
+
+        .primary-btn:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 18px 45px rgba(242,201,76,0.35);
+        }
+
+
+        .secondary-btn {
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            min-width: 190px;
+
+            padding: 14px 24px;
+
+            border-radius: 10px;
+
+            border: 1px solid rgba(255,255,255,0.3);
+
+            background: rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(10px);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.3s ease;
+        }
+
+
+        .secondary-btn:hover {
+
+            background: rgba(255,255,255,0.15);
+
+            transform: translateY(-4px);
+        }
+
+
+        /* ==================================================
+           INFORMATIONS BAS
+        ================================================== */
+
+        .hero-bottom {
+
+            position: absolute;
+
+            left: 6%;
+            bottom: 35px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 35px;
+
+            color: rgba(255,255,255,0.65);
+
+            font-size: 12px;
+
+            opacity: 0;
+
+            animation: fadeIn 1s ease 1.6s forwards;
+        }
+
+
+        .hero-bottom-item {
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        .hero-bottom-item i {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           INDICATEUR SCROLL
+        ================================================== */
+
+        .scroll-indicator {
+
+            position: absolute;
+
+            right: 6%;
+            bottom: 30px;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: rgba(255,255,255,0.6);
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+
+            opacity: 0;
+
+            animation:
+                fadeIn 1s ease 1.8s forwards,
+                floating 2s ease-in-out infinite;
+        }
+
+
+        .scroll-indicator i {
+
+            color: #f2c94c;
+
+            font-size: 17px;
+        }
+
+
+        /* ==================================================
+           ANIMATIONS
+        ================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(35px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes headerDown {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(7px);
+            }
+        }
+
+
+        /* ==================================================
+           TABLETTES
+        ================================================== */
+
+        @media (max-width: 900px) {
+
+            header {
+
+                padding: 18px 5%;
+            }
+
+
+            nav {
+
+                gap: 18px;
+            }
+
+
+            .hero-content {
+
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+
+            .hero-text {
+
+                max-width: 650px;
+            }
+
+
+            .hero-title {
+
+                font-size: clamp(40px, 7vw, 62px);
+            }
+
+
+            .hero-description {
+
+                font-size: 15px;
+            }
+
+
+            .hero-bottom {
+
+                left: 5%;
+            }
+
+
+            .scroll-indicator {
+
+                right: 5%;
+            }
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 700px) {
+
+            .hero {
+
+                min-height: 100dvh;
+
+                background-image:
+                    linear-gradient(
+                        rgba(3, 13, 23, 0.78),
+                        rgba(3, 13, 23, 0.90)
+                    ),
+                    url("images/background.jpg");
+
+                background-position: center;
+            }
+
+
+            /* HEADER */
+
+            header {
+
+                padding: 15px 20px;
+            }
+
+
+            .logo img {
+
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .logo h2 {
+
+                font-size: 18px;
+            }
+
+
+            nav {
+
+                display: none;
+
+                position: absolute;
+
+                top: 72px;
+                left: 20px;
+                right: 20px;
+
+                padding: 20px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 5px;
+
+                background:
+                    rgba(5,18,30,0.96);
+
+                border:
+                    1px solid rgba(255,255,255,0.12);
+
+                border-radius: 16px;
+
+                backdrop-filter: blur(20px);
+
+                box-shadow:
+                    0 20px 50px rgba(0,0,0,0.4);
+            }
+
+
+            nav.active {
+
+                display: flex;
+            }
+
+
+            nav a {
+
+                padding: 13px 10px;
+
+                border-radius: 8px;
+            }
+
+
+            nav a:hover {
+
+                background:
+                    rgba(255,255,255,0.06);
+            }
+
+
+            nav a::after {
+
+                display: none;
+            }
+
+
+            .login-btn {
+
+                margin-top: 5px;
+
+                text-align: center;
+            }
+
+
+            .menu-btn {
+
+                display: block;
+            }
+
+
+            /* CONTENU */
+
+            .hero-content {
+
+                padding:
+                    50px 22px
+                    90px;
+
+                justify-content: center;
+
+                text-align: center;
+            }
+
+
+            .hero-text {
+
+                width: 100%;
+            }
+
+
+            .welcome {
+
+                margin-bottom: 18px;
+
+                font-size: 10px;
+
+                padding: 7px 12px;
+            }
+
+
+            .hero-title {
+
+                font-size:
+                    clamp(35px, 11vw, 52px);
+
+                line-height: 1.12;
+
+                letter-spacing: -1px;
+
+                margin-bottom: 20px;
+            }
+
+
+            .hero-title span {
+
+                display: inline;
+            }
+
+
+            .hero-description {
+
+                font-size: 14px;
+
+                line-height: 1.7;
+
+                margin-left: auto;
+                margin-right: auto;
+
+                margin-bottom: 28px;
+            }
+
+
+            /* BOUTONS */
+
+            .hero-buttons {
+
+                flex-direction: column;
+
+                width: 100%;
+
+                gap: 11px;
+            }
+
+
+            .primary-btn,
+            .secondary-btn {
+
+                width: 100%;
+
+                min-width: 0;
+
+                padding: 14px 18px;
+            }
+
+
+            /* BAS */
+
+            .hero-bottom {
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+
+                bottom: 18px;
+
+                justify-content: center;
+
+                gap: 18px;
+
+                font-size: 9px;
+            }
+
+
+            .scroll-indicator {
+
+                display: none;
+            }
+        }
+
+
+        /* ==================================================
+           PETITS TELEPHONES
+        ================================================== */
+
+        @media (max-width: 380px) {
+
+            .hero-content {
+
+                padding-top: 30px;
+                padding-bottom: 80px;
+            }
+
+
+            .hero-title {
+
+                font-size: 34px;
+            }
+
+
+            .hero-description {
+
+                font-size: 13px;
+            }
+
+
+            .hero-bottom {
+
+                gap: 10px;
+
+                font-size: 8px;
+            }
+        }
+
+
+        /* ==================================================
+           MODE REDUCTION ANIMATION
+        ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration: 0.01ms !important;
+
+                animation-iteration-count: 1 !important;
+
+                transition-duration: 0.01ms !important;
+
+                scroll-behavior: auto !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     PAGE D'ACCUEIL
+================================================== -->
+
+<section class="hero">
+
+
+    <!-- ==================================================
+         HEADER
+    ================================================== -->
+
+    <header>
+
+
+        <!-- LOGO -->
+
+        <a href="#" class="logo">
+
+            <img
+                src="images/logo.png"
+                alt="BMJ SERVICE"
+            >
+
+            <h2>
+                BMJ <span>SERVICE</span>
+            </h2>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav id="navigation">
+
+            <a href="#">
+                Accueil
+            </a>
+
+            <a href="#formations">
+                Formations
+            </a>
+
+            <a href="#apropos">
+                À propos
+            </a>
+
+            <a href="#contact">
+                Contact
+            </a>
+
+            <a
+                href="connexion.html"
+                class="login-btn"
+            >
+                <i class="fa-solid fa-user"></i>
+                Se connecter
+            </a>
+
+        </nav>
+
+
+        <!-- MENU MOBILE -->
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="Ouvrir le menu"
+        >
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+    </header>
+
+
+
+    <!-- ==================================================
+         CONTENU PRINCIPAL
+    ================================================== -->
+
+    <main class="hero-content">
+
+
+        <div class="hero-text">
+
+
+            <!-- LABEL -->
+
+            <div class="welcome">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                APPRENTISSAGE PROFESSIONNEL
+
+            </div>
+
+
+            <!-- TITRE -->
+
+            <h1 class="hero-title">
+
+                Apprenez.
+                <span>Progressez.</span>
+                Réussissez.
+
+            </h1>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="hero-description">
+
+                Développez vos compétences professionnelles grâce
+                à des formations accessibles, modernes et pratiques.
+                Apprenez à votre rythme et préparez-vous pour votre avenir.
+
+            </p>
+
+
+            <!-- BOUTONS -->
+
+            <div class="hero-buttons">
+
+                <a
+                    href="reservation.html"
+                    class="primary-btn"
+                >
+
+                    Commencer maintenant
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+                <a
+                    href="reservation.html"
+                    class="secondary-btn"
+                >
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                    Voir les formations
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- ==================================================
+         INFORMATIONS BAS
+    ================================================== -->
+
+    <div class="hero-bottom">
+
+
+        <div class="hero-bottom-item">
+
+            <i class="fa-solid fa-laptop"></i>
+
+            Formation en ligne
+
+        </div>
+
+
+        <div class="hero-bottom-item">
+
+            <i class="fa-solid fa-clock"></i>
+
+            Apprenez à votre rythme
+
+        </div>
+
+
+        <div class="hero-bottom-item">
+
+            <i class="fa-solid fa-certificate"></i>
+
+            Certifications
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         SCROLL
+    ================================================== -->
+
+    <div class="scroll-indicator">
+
+        SCROLL
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+
+    /* ================================================
+       MENU MOBILE
+    ================================================= */
+
+    const menuBtn =
+        document.getElementById("menuBtn");
+
+    const navigation =
+        document.getElementById("navigation");
+
+
+    menuBtn.addEventListener(
+        "click",
+        function () {
+
+            navigation.classList.toggle("active");
+
+
+            const icon =
+                menuBtn.querySelector("i");
+
+
+            if (
+                navigation.classList.contains("active")
+            ) {
+
+                icon.classList.remove(
+                    "fa-bars"
+                );
+
+                icon.classList.add(
+                    "fa-xmark"
+                );
+
+            } else {
+
+                icon.classList.remove(
+                    "fa-xmark"
+                );
+
+                icon.classList.add(
+                    "fa-bars"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* ================================================
+       FERMER LE MENU APRÈS UN CLIC
+    ================================================= */
+
+    const menuLinks =
+        navigation.querySelectorAll("a");
+
+
+    menuLinks.forEach(
+        function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    navigation.classList.remove(
+                        "active"
+                    );
+
+
+                    const icon =
+                        menuBtn.querySelector("i");
+
+
+                    icon.classList.remove(
+                        "fa-xmark"
+                    );
+
+                    icon.classList.add(
+                        "fa-bars"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
