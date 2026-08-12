@@ -1,205 +1,1868 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paiement du cours - Airtel Money</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Réserver ma place — BMJ SERVICE</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
     <style>
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f5f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+            font-family: "Poppins", sans-serif;
+
             min-height: 100vh;
-            padding: 20px;
+
+            background: #07121d;
+
+            color: white;
+
+            overflow-x: hidden;
         }
-        .card-paiement {
-            background: #ffffff;
-            width: 100%;
-            max-width: 420px;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+
+
+        /* ==================================================
+           PAGE PRINCIPALE
+        ================================================== */
+
+        .reservation-page {
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+
+            background: #07121d;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
+
+
+        /* ==================================================
+           PARTIE IMAGE
+        ================================================== */
+
+        .reservation-image {
+
+            width: 43%;
+
+            min-height: 100vh;
+
+            position: relative;
+
+            background-image:
+                linear-gradient(
+                    135deg,
+                    rgba(3, 13, 23, 0.25),
+                    rgba(3, 13, 23, 0.78)
+                ),
+                url("images/back.jpeg");
+
+            background-size: cover;
+
+            background-position: center;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 55px;
+
+            overflow: hidden;
+
+            animation: imageAppear 1s ease forwards;
         }
-        .logo-airtel {
-            color: #e20613;
+
+
+        /* Effet lumineux */
+
+        .reservation-image::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            background: rgba(242, 201, 76, 0.10);
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            top: 10%;
+
+            left: -100px;
+        }
+
+
+        /* ==================================================
+           TEXTE SUR L'IMAGE
+        ================================================== */
+
+        .image-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 470px;
+
+            animation:
+                fadeUp 1s ease 0.4s forwards;
+
+            opacity: 0;
+        }
+
+
+        .image-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 14px;
+
+            margin-bottom: 18px;
+
+            border-radius: 30px;
+
+            border:
+                1px solid
+                rgba(242, 201, 76, 0.45);
+
+            background:
+                rgba(242, 201, 76, 0.10);
+
+            color: #f2c94c;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            letter-spacing: 1px;
+        }
+
+
+        .image-content h1 {
+
+            font-size:
+                clamp(32px, 4vw, 58px);
+
+            line-height: 1.12;
+
             font-weight: 800;
-            font-size: 26px;
-            letter-spacing: -0.5px;
-        }
-        .subtitle {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        .form-group {
+
+            letter-spacing: -1.5px;
+
             margin-bottom: 18px;
         }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            color: #1e293b;
-            font-weight: 600;
-            font-size: 0.9rem;
+
+
+        .image-content h1 span {
+
+            color: #f2c94c;
         }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
+
+
+        .image-content p {
+
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 14px;
+
+            line-height: 1.8;
         }
-        input:focus, select:focus {
-            border-color: #e20613;
+
+
+        /* ==================================================
+           PARTIE FORMULAIRE
+        ================================================== */
+
+        .reservation-form-section {
+
+            width: 57%;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding: 40px 8%;
+
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(20, 90, 134, 0.16),
+                    transparent 35%
+                ),
+                #07121d;
         }
-        .btn-payer {
-            width: 100%;
-            background-color: #e20613;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 1rem;
+
+
+        /* ==================================================
+           HEADER FORMULAIRE
+        ================================================== */
+
+        .form-header {
+
+            margin-bottom: 28px;
+
+            animation:
+                fadeUp 0.8s ease 0.2s forwards;
+
+            opacity: 0;
+        }
+
+
+        .form-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .form-logo img {
+
+            width: 42px;
+
+            height: 42px;
+
+            object-fit: contain;
+
+            border-radius: 9px;
+        }
+
+
+        .form-logo h2 {
+
+            font-size: 20px;
+
             font-weight: 700;
+        }
+
+
+        .form-logo span {
+
+            color: #f2c94c;
+        }
+
+
+        .form-header .small-title {
+
+            color: #f2c94c;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-header h2 {
+
+            font-size:
+                clamp(28px, 3vw, 42px);
+
+            line-height: 1.2;
+
+            margin-bottom: 10px;
+
+            font-weight: 700;
+        }
+
+
+        .form-header p {
+
+            color:
+                rgba(255,255,255,0.58);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            max-width: 600px;
+        }
+
+
+        /* ==================================================
+           FORMULAIRE
+        ================================================== */
+
+        .reservation-form {
+
+            width: 100%;
+
+            max-width: 650px;
+
+            animation:
+                fadeUp 0.8s ease 0.5s forwards;
+
+            opacity: 0;
+        }
+
+
+        /* ==================================================
+           GRID DES CHAMPS
+        ================================================== */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .form-group {
+
+            position: relative;
+        }
+
+
+        .form-group.full {
+
+            grid-column: 1 / -1;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 12px;
+
+            font-weight: 500;
+        }
+
+
+        /* ==================================================
+           INPUT
+        ================================================== */
+
+        .input-container {
+
+            position: relative;
+        }
+
+
+        .input-container > i {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color:
+                rgba(255,255,255,0.38);
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            transition: 0.3s ease;
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            height: 52px;
+
+            padding:
+                0 45px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            color: white;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+
+            transition:
+                border 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .form-group input::placeholder {
+
+            color:
+                rgba(255,255,255,0.30);
+        }
+
+
+        .form-group input:focus {
+
+            border-color:
+                rgba(242,201,76,0.75);
+
+            background:
+                rgba(255,255,255,0.065);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(242,201,76,0.07);
+        }
+
+
+        .form-group input:focus
+        + .input-icon {
+
+            color: #f2c94c;
+        }
+
+
+        /* ==================================================
+           OEIL MOT DE PASSE
+        ================================================== */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color:
+                rgba(255,255,255,0.38);
+
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
+
+            font-size: 14px;
+
+            padding: 5px;
+
+            transition: 0.3s ease;
         }
-        .btn-payer:hover {
-            background-color: #c10410;
+
+
+        .password-toggle:hover {
+
+            color: #f2c94c;
         }
-        .btn-payer:disabled {
-            background-color: #94a3b8;
-            cursor: not-allowed;
-        }
-        #message {
+
+
+        /* ==================================================
+           CONDITIONS
+        ================================================== */
+
+        .terms {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
             margin-top: 20px;
-            padding: 12px;
-            border-radius: 8px;
+
+            color:
+                rgba(255,255,255,0.50);
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        .terms input {
+
+            margin-top: 3px;
+
+            accent-color: #f2c94c;
+
+            cursor: pointer;
+        }
+
+
+        .terms a {
+
+            color: #f2c94c;
+
+            text-decoration: none;
+        }
+
+
+        /* ==================================================
+           BOUTON RESERVER
+        ================================================== */
+
+        .reserve-button {
+
+            width: 100%;
+
+            height: 54px;
+
+            margin-top: 24px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #f2c94c;
+
+            color: #07121d;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(242,201,76,0.16);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .reserve-button:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(242,201,76,0.28);
+        }
+
+
+        .reserve-button:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* ==================================================
+           RETOUR
+        ================================================== */
+
+        .back-link {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 22px;
+
+            color:
+                rgba(255,255,255,0.45);
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .back-link:hover {
+
+            color: white;
+        }
+
+
+        .back-link i {
+
+            margin-right: 7px;
+        }
+
+
+        /* ==================================================
+           MESSAGE
+        ================================================== */
+
+        .form-message {
+
             display: none;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            text-align: center;
+
+            padding: 13px 15px;
+
+            margin-top: 18px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            line-height: 1.5;
         }
-        .success {
-            background-color: #dcfce7;
-            color: #166534;
-            border: 1px solid #bbf7d0;
+
+
+        .form-message.error {
+
+            display: block;
+
+            color: #ff8f8f;
+
+            background:
+                rgba(255,70,70,0.08);
+
+            border:
+                1px solid
+                rgba(255,70,70,0.18);
         }
-        .error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
+
+
+        .form-message.success {
+
+            display: block;
+
+            color: #7ee7aa;
+
+            background:
+                rgba(40,200,110,0.08);
+
+            border:
+                1px solid
+                rgba(40,200,110,0.18);
         }
+
+
+        /* ==================================================
+           ANIMATIONS
+        ================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes imageAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(1.04);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1);
+            }
+        }
+
+
+        /* ==================================================
+           TABLETTE
+        ================================================== */
+
+        @media (max-width: 950px) {
+
+            .reservation-page {
+
+                flex-direction: column;
+            }
+
+
+            .reservation-image {
+
+                width: 100%;
+
+                min-height: 38vh;
+
+                max-height: 420px;
+
+                padding: 35px 6%;
+
+                align-items: flex-end;
+            }
+
+
+            .reservation-form-section {
+
+                width: 100%;
+
+                min-height: auto;
+
+                padding:
+                    45px 7%;
+            }
+
+
+            .image-content {
+
+                max-width: 650px;
+            }
+
+
+            .image-content h1 {
+
+                font-size: 40px;
+            }
+
+
+            .form-logo {
+
+                margin-bottom: 22px;
+            }
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                background: #07121d;
+            }
+
+
+            .reservation-image {
+
+                min-height: 290px;
+
+                max-height: 290px;
+
+                padding:
+                    30px 22px;
+            }
+
+
+            .image-content h1 {
+
+                font-size: 30px;
+
+                letter-spacing: -0.8px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .image-content p {
+
+                font-size: 11px;
+
+                line-height: 1.6;
+            }
+
+
+            .image-label {
+
+                font-size: 9px;
+
+                padding: 6px 10px;
+
+                margin-bottom: 12px;
+            }
+
+
+            .reservation-form-section {
+
+                padding:
+                    30px 20px 40px;
+            }
+
+
+            .form-logo {
+
+                margin-bottom: 25px;
+            }
+
+
+            .form-logo img {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+
+            .form-logo h2 {
+
+                font-size: 18px;
+            }
+
+
+            .form-header {
+
+                margin-bottom: 23px;
+            }
+
+
+            .form-header .small-title {
+
+                font-size: 9px;
+            }
+
+
+            .form-header h2 {
+
+                font-size: 27px;
+
+                margin-bottom: 8px;
+            }
+
+
+            .form-header p {
+
+                font-size: 11px;
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 15px;
+            }
+
+
+            .form-group.full {
+
+                grid-column: auto;
+            }
+
+
+            .form-group input {
+
+                height: 50px;
+
+                font-size: 12px;
+            }
+
+
+            .terms {
+
+                font-size: 10px;
+
+                margin-top: 17px;
+            }
+
+
+            .reserve-button {
+
+                height: 52px;
+
+                margin-top: 20px;
+
+                font-size: 13px;
+            }
+
+
+            .back-link {
+
+                margin-top: 18px;
+
+                font-size: 10px;
+            }
+        }
+
+
+        /* ==================================================
+           PETITS TELEPHONES
+        ================================================== */
+
+        @media (max-width: 380px) {
+
+            .reservation-image {
+
+                min-height: 250px;
+
+                max-height: 250px;
+            }
+
+
+            .image-content h1 {
+
+                font-size: 26px;
+            }
+
+
+            .image-content p {
+
+                font-size: 10px;
+            }
+
+
+            .reservation-form-section {
+
+                padding:
+                    25px 17px 35px;
+            }
+
+
+            .form-header h2 {
+
+                font-size: 24px;
+            }
+        }
+
+
+        /* ==================================================
+           ACCESSIBILITE
+        ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration: 0.01ms !important;
+
+                animation-iteration-count: 1 !important;
+
+                transition-duration: 0.01ms !important;
+            }
+        }
+
     </style>
+
 </head>
+
+
 <body>
 
-<div class="card-paiement">
-    <div class="header">
-        <div class="logo-airtel">Airtel Money</div>
-        <p class="subtitle">Achetez votre accès Premium directement</p>
-    </div>
-    
-    <form id="formPaiement">
-        <div class="form-group">
-            <label for="cours">Sélectionner le cours</label>
-            <select id="cours" required>
-                <option value="Développement Web Fullstack|25000">Développement Web Fullstack - 25 000 CDF</option>
-                <option value="Python & Data Science|35000">Python & Data Science - 35 000 CDF</option>
-            </select>
+
+<!-- ==================================================
+     PAGE RESERVATION
+================================================== -->
+
+<div class="reservation-page">
+
+
+    <!-- ==================================================
+         IMAGE
+    ================================================== -->
+
+    <section class="reservation-image">
+
+
+        <div class="image-content">
+
+
+            <div class="image-label">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                ESEAY
+
+            </div>
+
+
+            <h1>
+
+                Réservez votre
+                <span>place.</span>
+
+            </h1>
+
+
+            <p>
+
+                Faites le premier pas vers le développement
+                de vos compétences professionnelles.
+                Inscrivez-vous maintenant et préparez votre
+                parcours d'apprentissage.
+
+            </p>
+
+
         </div>
 
-        <div class="form-group">
-            <label for="telephone">Numéro Airtel Money</label>
-            <input type="tel" id="telephone" placeholder="Ex: +243970000000 ou 0970000000" required>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         FORMULAIRE
+    ================================================== -->
+
+    <section class="reservation-form-section">
+
+
+        <!-- LOGO -->
+
+        <div class="form-logo">
+
+            <img
+                src="images/logo.png"
+                alt="BMJ SERVICE"
+            >
+
+            <h2>
+                ES<span>EAY</span>
+            </h2>
+
         </div>
 
-        <button type="submit" id="btnPayer" class="btn-payer">Valider le paiement</button>
-    </form>
 
-    <div id="message"></div>
+
+        <!-- TITRE -->
+
+        <div class="form-header">
+
+            <div class="small-title">
+
+                Inscription
+
+            </div>
+
+
+            <h2>
+
+                Réservez votre place
+
+            </h2>
+
+
+            <p>
+
+                Remplissez le formulaire ci-dessous pour
+                réserver votre place sur notre plateforme
+                d'apprentissage professionnel.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- FORMULAIRE -->
+
+        <form
+            class="reservation-form"
+            id="reservationForm"
+            novalidate
+        >
+
+
+            <div class="form-grid">
+
+
+                <!-- NOM -->
+
+                <div class="form-group">
+
+                    <label for="nom">
+                        Nom
+                    </label>
+
+                    <div class="input-container">
+
+                        <i
+                            class="fa-solid fa-user input-icon"
+                        ></i>
+
+                        <input
+                            type="text"
+                            id="nom"
+                            name="nom"
+                            placeholder="Votre nom"
+                            autocomplete="family-name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRENOM -->
+
+                <div class="form-group">
+
+                    <label for="prenom">
+                        Prénom
+                    </label>
+
+                    <div class="input-container">
+
+                        <i
+                            class="fa-solid fa-user input-icon"
+                        ></i>
+
+                        <input
+                            type="text"
+                            id="prenom"
+                            name="prenom"
+                            placeholder="Votre prénom"
+                            autocomplete="given-name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group full">
+
+                    <label for="email">
+                        Adresse email
+                    </label>
+
+                    <div class="input-container">
+
+                        <i
+                            class="fa-solid fa-envelope input-icon"
+                        ></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="exemple@email.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TELEPHONE -->
+
+                <div class="form-group full">
+
+                    <label for="telephone">
+                        Numéro de téléphone
+                    </label>
+
+                    <div class="input-container">
+
+                        <i
+                            class="fa-solid fa-phone input-icon"
+                        ></i>
+
+                        <input
+                            type="tel"
+                            id="telephone"
+                            name="telephone"
+                            placeholder="+243 000 000 000"
+                            autocomplete="tel"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MOT DE PASSE -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Mot de passe
+                    </label>
+
+                    <div class="input-container">
+
+                        <i
+                            class="fa-solid fa-lock input-icon"
+                        ></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Créer un mot de passe"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="password"
+                            aria-label="Afficher le mot de passe"
+                        >
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONFIRMATION -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirmer le mot de passe
+                    </label>
+
+                    <div class="input-container">
+
+                        <i
+                            class="fa-solid fa-lock input-icon"
+                        ></i>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirmer le mot de passe"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="confirmPassword"
+                            aria-label="Afficher le mot de passe"
+                        >
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- CONDITIONS -->
+
+            <label class="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
+
+                <span>
+
+                    J'accepte les conditions d'utilisation
+                    et la politique de confidentialité de
+                    <a href="#">
+                        BMJ SERVICE
+                    </a>.
+
+                </span>
+
+            </label>
+
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="formMessage"
+                class="form-message"
+            ></div>
+
+
+
+            <!-- BOUTON -->
+
+            <button
+                type="submit"
+                class="reserve-button"
+                id="reserveButton"
+            >
+
+                <span>
+                    Réserver ma place
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- RETOUR -->
+
+        <a
+            href="index.html"
+            class="back-link"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Retour à l'accueil
+
+        </a>
+
+
+    </section>
+
+
 </div>
 
-<script>
-   // 🔗 URL de votre API Backend sur Render
-const API_RENDER_URL = "https://back-end-h602.onrender.com";
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Pré-remplir le téléphone si l'utilisateur est stocké localement
-    const userConnecte = JSON.parse(localStorage.getItem("bmj_current_user"));
-    if (userConnecte && userConnecte.telephone) {
-        const inputTel = document.getElementById("telephone");
-        if (inputTel) inputTel.value = userConnecte.telephone;
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+
+    /* ==================================================
+       AFFICHER / MASQUER MOT DE PASSE
+    ================================================== */
+
+    const passwordButtons =
+        document.querySelectorAll(
+            ".password-toggle"
+        );
+
+
+    passwordButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const targetId =
+                        button.dataset.target;
+
+                    const input =
+                        document.getElementById(
+                            targetId
+                        );
+
+                    const icon =
+                        button.querySelector("i");
+
+
+                    if (
+                        input.type === "password"
+                    ) {
+
+                        input.type = "text";
+
+                        icon.classList.remove(
+                            "fa-eye"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye-slash"
+                        );
+
+                    } else {
+
+                        input.type = "password";
+
+                        icon.classList.remove(
+                            "fa-eye-slash"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+
+    /* ==================================================
+       FORMULAIRE
+    ================================================== */
+
+    const form =
+        document.getElementById(
+            "reservationForm"
+        );
+
+
+    const message =
+        document.getElementById(
+            "formMessage"
+        );
+
+
+    const reserveButton =
+        document.getElementById(
+            "reserveButton"
+        );
+
+
+
+    form.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            /* ------------------------------------------
+               RECUPERATION DES INFORMATIONS
+            ------------------------------------------ */
+
+            const nom =
+                document.getElementById(
+                    "nom"
+                ).value.trim();
+
+
+            const prenom =
+                document.getElementById(
+                    "prenom"
+                ).value.trim();
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
+
+
+            const telephone =
+                document.getElementById(
+                    "telephone"
+                ).value.trim();
+
+
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+
+
+            const confirmPassword =
+                document.getElementById(
+                    "confirmPassword"
+                ).value;
+
+
+            const terms =
+                document.getElementById(
+                    "terms"
+                ).checked;
+
+
+
+            /* ------------------------------------------
+               RESET MESSAGE
+            ------------------------------------------ */
+
+            message.className =
+                "form-message";
+
+            message.textContent = "";
+
+
+
+            /* ------------------------------------------
+               VERIFICATION NOM
+            ------------------------------------------ */
+
+            if (!nom) {
+
+                showError(
+                    "Veuillez entrer votre nom."
+                );
+
+                document.getElementById(
+                    "nom"
+                ).focus();
+
+                return;
+            }
+
+
+
+            /* ------------------------------------------
+               VERIFICATION PRENOM
+            ------------------------------------------ */
+
+            if (!prenom) {
+
+                showError(
+                    "Veuillez entrer votre prénom."
+                );
+
+                document.getElementById(
+                    "prenom"
+                ).focus();
+
+                return;
+            }
+
+
+
+            /* ------------------------------------------
+               VERIFICATION EMAIL
+            ------------------------------------------ */
+
+            const emailRegex =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (!emailRegex.test(email)) {
+
+                showError(
+                    "Veuillez entrer une adresse email valide."
+                );
+
+                document.getElementById(
+                    "email"
+                ).focus();
+
+                return;
+            }
+
+
+
+            /* ------------------------------------------
+               TELEPHONE
+            ------------------------------------------ */
+
+            if (
+                telephone.length < 8
+            ) {
+
+                showError(
+                    "Veuillez entrer un numéro de téléphone valide."
+                );
+
+                document.getElementById(
+                    "telephone"
+                ).focus();
+
+                return;
+            }
+
+
+
+            /* ------------------------------------------
+               MOT DE PASSE
+            ------------------------------------------ */
+
+            if (
+                password.length < 8
+            ) {
+
+                showError(
+                    "Le mot de passe doit contenir au moins 8 caractères."
+                );
+
+                document.getElementById(
+                    "password"
+                ).focus();
+
+                return;
+            }
+
+
+
+            /* ------------------------------------------
+               CONFIRMATION MOT DE PASSE
+            ------------------------------------------ */
+
+            if (
+                password !== confirmPassword
+            ) {
+
+                showError(
+                    "Les deux mots de passe ne correspondent pas."
+                );
+
+                document.getElementById(
+                    "confirmPassword"
+                ).focus();
+
+                return;
+            }
+
+
+
+            /* ------------------------------------------
+               CONDITIONS
+            ------------------------------------------ */
+
+            if (!terms) {
+
+                showError(
+                    "Vous devez accepter les conditions d'utilisation."
+                );
+
+                return;
+            }
+
+
+
+            /* ==================================================
+               RESERVATION
+            ================================================== */
+
+            reserveButton.disabled = true;
+
+
+            reserveButton.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Réservation en cours...</span>
+            `;
+
+
+
+            /* ==================================================
+               SIMULATION DE RESERVATION
+               
+               PLUS TARD :
+               PHP + MySQL
+            ================================================== */
+
+            setTimeout(
+                function() {
+
+
+                    /* --------------------------------------
+                       MESSAGE DE SUCCES
+                    -------------------------------------- */
+
+                    showSuccess(
+                        "Votre demande de réservation a été enregistrée avec succès."
+                    );
+
+
+                    /* --------------------------------------
+                       MODIFIER LE BOUTON
+                    -------------------------------------- */
+
+                    reserveButton.innerHTML = `
+                        <i class="fa-solid fa-check"></i>
+                        <span>Place réservée</span>
+                    `;
+
+
+
+                    /* ==================================================
+                       SAUVEGARDE DES INFORMATIONS
+                       
+                       OPTIONNEL POUR LA SUITE
+                    ================================================== */
+
+                    localStorage.setItem(
+                        "bmj_reservation",
+                        "true"
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_nom",
+                        nom
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_prenom",
+                        prenom
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_email",
+                        email
+                    );
+
+
+                    localStorage.setItem(
+                        "bmj_telephone",
+                        telephone
+                    );
+
+
+
+                    /* ==================================================
+                       REDIRECTION VERS CONFIRMATION
+                    ================================================== */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "confirmation.html";
+
+                        },
+                        800
+                    );
+
+
+                },
+                1200
+            );
+
+        }
+    );
+
+
+
+    /* ==================================================
+       MESSAGE ERREUR
+    ================================================== */
+
+    function showError(text) {
+
+        message.textContent = text;
+
+        message.className =
+            "form-message error";
     }
 
-    const formPaiement = document.getElementById("formPaiement");
-    const btnPayer = document.getElementById("btnPayer");
-    const messageDiv = document.getElementById("message");
 
-    if (!formPaiement) return;
 
-    formPaiement.addEventListener("submit", async function (e) {
-        e.preventDefault();
+    /* ==================================================
+       MESSAGE SUCCES
+    ================================================== */
 
-        // Récupérer l'ID de l'apprenant connecté (ou 1 par défaut pour les tests)
-        const apprenantId = userConnecte ? userConnecte.id : 1;
-        
-        const selectCours = document.getElementById("cours").value;
-        const [coursNom, montantStr] = selectCours.split("|");
-        const montant = parseFloat(montantStr) || 0; // Conversion en chiffre
-        const telephone = document.getElementById("telephone").value.trim();
+    function showSuccess(text) {
 
-        btnPayer.disabled = true;
-        btnPayer.innerText = "Envoi de la requête...";
-        messageDiv.style.display = "none";
+        message.textContent = text;
 
-        try {
-            const response = await fetch(`${API_RENDER_URL}/api/payer-cours`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    apprenant_id: parseInt(apprenantId),
-                    cours_nom: coursNom,
-                    montant: montant,
-                    telephone: telephone
-                })
-            });
+        message.className =
+            "form-message success";
+    }
 
-            const data = await response.json();
 
-            messageDiv.style.display = "block";
-            if (response.ok && data.success) {
-                messageDiv.className = "success";
-                messageDiv.innerHTML = "📲 <strong>Demande envoyée !</strong><br>Veuillez regarder l'écran de votre téléphone et saisir votre <strong>code PIN Airtel Money</strong> pour valider la transaction.";
-            } else {
-                messageDiv.className = "error";
-                messageDiv.innerText = data.error || "Une erreur est survenue lors du paiement.";
-            }
-        } catch (err) {
-            console.error("Erreur réseau :", err);
-            messageDiv.style.display = "block";
-            messageDiv.className = "error";
-            messageDiv.innerText = "Impossible de contacter le serveur distant. Vérifiez votre connexion.";
-        } finally {
-            btnPayer.disabled = false;
-            btnPayer.innerText = "Valider le paiement";
-        }
-    });
-});
 </script>
 
 </body>
+
 </html>
