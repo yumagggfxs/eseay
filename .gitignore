@@ -1,0 +1,31 @@
+# ============================================================
+# BMJ VOICE AI
+# ============================================================
+
+node_modules/
+
+.env
+
+.env.local
+.env.production
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.DS_Store
+
+.vscode/
+
+.idea/
+
+# fichiers audio temporaires
+audio/*
+temp/*
+
+# garder les dossiers
+!audio/.gitkeep
+!temp/.gitkeep
+
+# fichiers système
+Thumbs.db
