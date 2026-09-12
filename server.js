@@ -29,7 +29,7 @@ const DATABASE_URL =
     process.env.DATABASE_URL || "postgresql://audio_db_n28a_user:yLIb8T9QvrQtUPymu7D5U0jkLl6xBdYc@dpg-dai8lo0ae00c73dlk1rg-a/audio_db_n28a";
 
 const ELEVENLABS_API_KEY =
-    process.env.ELEVENLABS_API_KEY || "sk_5e371bcffb2b4762ea4c6247699dfe32ec06092590143a86";
+    process.env.ELEVENLABS_API_KEY || "sk_5983c5e38104ac7da5b2e26d52d06e2bbede37ed1b143721";
 
 const JWT_SECRET =
     process.env.JWT_SECRET ||
