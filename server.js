@@ -584,26 +584,47 @@ async function initDatabase() {
 
     if (!pool) {
 
+        console.warn(
+            "DATABASE: pool PostgreSQL indisponible."
+        );
+
         return;
 
     }
 
+
+    console.log(
+        "Initialisation de la base de données..."
+    );
+
+
+    /* ========================================================
+       EXTENSION UUID
+    ======================================================== */
 
     await dbQuery(`
         CREATE EXTENSION IF NOT EXISTS pgcrypto
     `);
 
 
+    /* ========================================================
+       USERS
+    ======================================================== */
+
     await dbQuery(`
         CREATE TABLE IF NOT EXISTS users (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
-            nom VARCHAR(150) NOT NULL,
+            nom VARCHAR(150)
+                NOT NULL,
 
-            email VARCHAR(255) UNIQUE NOT NULL,
+            email VARCHAR(255)
+                UNIQUE NOT NULL,
 
-            password_hash TEXT NOT NULL,
+            password_hash TEXT
+                NOT NULL,
 
             photo TEXT,
 
@@ -631,10 +652,68 @@ async function initDatabase() {
     `);
 
 
+    /*
+     * IMPORTANT :
+     * Ces ALTER TABLE permettent de réparer
+     * une ancienne table users déjà existante.
+     */
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS photo TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS role VARCHAR(30)
+        DEFAULT 'user'
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS plan VARCHAR(30)
+        DEFAULT 'free'
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS is_active BOOLEAN
+        DEFAULT TRUE
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS is_blocked BOOLEAN
+        DEFAULT FALSE
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+    await dbQuery(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS last_login_at TIMESTAMPTZ
+    `);
+
+
+    /* ========================================================
+       VOICES
+    ======================================================== */
+
     await dbQuery(`
         CREATE TABLE IF NOT EXISTS voices (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             external_voice_id VARCHAR(255)
                 UNIQUE NOT NULL,
@@ -671,10 +750,85 @@ async function initDatabase() {
     `);
 
 
+    /*
+     * Réparation des anciennes installations.
+     */
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS external_voice_id VARCHAR(255)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS name VARCHAR(255)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS provider VARCHAR(100)
+        DEFAULT 'elevenlabs'
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS gender VARCHAR(50)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS language VARCHAR(20)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS language_name VARCHAR(100)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS description TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS preview_url TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS is_active BOOLEAN
+        DEFAULT TRUE
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS is_premium BOOLEAN
+        DEFAULT FALSE
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+    await dbQuery(`
+        ALTER TABLE voices
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /* ========================================================
+       PROJECTS
+    ======================================================== */
+
     await dbQuery(`
         CREATE TABLE IF NOT EXISTS projects (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             user_id UUID NOT NULL
                 REFERENCES users(id)
@@ -701,9 +855,43 @@ async function initDatabase() {
 
 
     await dbQuery(`
+        ALTER TABLE projects
+        ADD COLUMN IF NOT EXISTS description TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE projects
+        ADD COLUMN IF NOT EXISTS language VARCHAR(20)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE projects
+        ADD COLUMN IF NOT EXISTS status VARCHAR(30)
+        DEFAULT 'draft'
+    `);
+
+    await dbQuery(`
+        ALTER TABLE projects
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+    await dbQuery(`
+        ALTER TABLE projects
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /* ========================================================
+       AUDIO GENERATIONS
+    ======================================================== */
+
+    await dbQuery(`
         CREATE TABLE IF NOT EXISTS audio_generations (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             user_id UUID NOT NULL
                 REFERENCES users(id)
@@ -773,10 +961,151 @@ async function initDatabase() {
     `);
 
 
+    /*
+     * Réparation des anciennes installations.
+     */
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS project_id UUID
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS voice_id UUID
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS provider VARCHAR(100)
+        DEFAULT 'elevenlabs'
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS model_id VARCHAR(100)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS original_text TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS processed_text TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS language VARCHAR(20)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS voice_external_id VARCHAR(255)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS format VARCHAR(100)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS audio_url TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS audio_path TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS audio_chunks JSONB
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS duration_seconds NUMERIC
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS character_count INTEGER
+        DEFAULT 0
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS chunk_count INTEGER
+        DEFAULT 1
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS status VARCHAR(30)
+        DEFAULT 'processing'
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS error TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS request_id VARCHAR(255)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS provider_character_count INTEGER
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS stability NUMERIC
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS similarity_boost NUMERIC
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS style NUMERIC
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS speed NUMERIC
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+    await dbQuery(`
+        ALTER TABLE audio_generations
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /* ========================================================
+       USAGE RECORDS
+    ======================================================== */
+
     await dbQuery(`
         CREATE TABLE IF NOT EXISTS usage_records (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             user_id UUID NOT NULL
                 REFERENCES users(id)
@@ -806,10 +1135,76 @@ async function initDatabase() {
     `);
 
 
+    /*
+     * ========================================================
+     * CORRECTION IMPORTANTE
+     * ========================================================
+     *
+     * Si usage_records existait déjà sans
+     * generations_count, CREATE TABLE IF NOT EXISTS
+     * ne faisait rien.
+     *
+     * Cette commande ajoute maintenant la colonne.
+     */
+
+    await dbQuery(`
+        ALTER TABLE usage_records
+        ADD COLUMN IF NOT EXISTS generations_count INTEGER
+        DEFAULT 0
+    `);
+
+
+    await dbQuery(`
+        ALTER TABLE usage_records
+        ADD COLUMN IF NOT EXISTS characters_used INTEGER
+        DEFAULT 0
+    `);
+
+    await dbQuery(`
+        ALTER TABLE usage_records
+        ADD COLUMN IF NOT EXISTS month_key VARCHAR(20)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE usage_records
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+    await dbQuery(`
+        ALTER TABLE usage_records
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /*
+     * Sécurité supplémentaire :
+     * les anciennes lignes peuvent avoir NULL.
+     */
+
+    await dbQuery(`
+        UPDATE usage_records
+        SET generations_count = 0
+        WHERE generations_count IS NULL
+    `);
+
+    await dbQuery(`
+        UPDATE usage_records
+        SET characters_used = 0
+        WHERE characters_used IS NULL
+    `);
+
+
+    /* ========================================================
+       USER QUOTAS
+    ======================================================== */
+
     await dbQuery(`
         CREATE TABLE IF NOT EXISTS user_quotas (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             user_id UUID UNIQUE NOT NULL
                 REFERENCES users(id)
@@ -831,9 +1226,38 @@ async function initDatabase() {
 
 
     await dbQuery(`
+        ALTER TABLE user_quotas
+        ADD COLUMN IF NOT EXISTS monthly_limit INTEGER
+        DEFAULT 10000
+    `);
+
+    await dbQuery(`
+        ALTER TABLE user_quotas
+        ADD COLUMN IF NOT EXISTS characters_used INTEGER
+        DEFAULT 0
+    `);
+
+    await dbQuery(`
+        ALTER TABLE user_quotas
+        ADD COLUMN IF NOT EXISTS month_key VARCHAR(20)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE user_quotas
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /* ========================================================
+       ADMIN ACTIVITY
+    ======================================================== */
+
+    await dbQuery(`
         CREATE TABLE IF NOT EXISTS admin_activity (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             admin_user_id UUID
                 REFERENCES users(id)
@@ -855,9 +1279,46 @@ async function initDatabase() {
 
 
     await dbQuery(`
+        ALTER TABLE admin_activity
+        ADD COLUMN IF NOT EXISTS admin_user_id UUID
+    `);
+
+    await dbQuery(`
+        ALTER TABLE admin_activity
+        ADD COLUMN IF NOT EXISTS action VARCHAR(150)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE admin_activity
+        ADD COLUMN IF NOT EXISTS description TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE admin_activity
+        ADD COLUMN IF NOT EXISTS ip_address VARCHAR(100)
+    `);
+
+    await dbQuery(`
+        ALTER TABLE admin_activity
+        ADD COLUMN IF NOT EXISTS user_agent TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE admin_activity
+        ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /* ========================================================
+       SYSTEM SETTINGS
+    ======================================================== */
+
+    await dbQuery(`
         CREATE TABLE IF NOT EXISTS system_settings (
 
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY
+                DEFAULT gen_random_uuid(),
 
             setting_key VARCHAR(150)
                 UNIQUE NOT NULL,
@@ -872,6 +1333,27 @@ async function initDatabase() {
         )
     `);
 
+
+    await dbQuery(`
+        ALTER TABLE system_settings
+        ADD COLUMN IF NOT EXISTS setting_value TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE system_settings
+        ADD COLUMN IF NOT EXISTS description TEXT
+    `);
+
+    await dbQuery(`
+        ALTER TABLE system_settings
+        ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ
+        DEFAULT NOW()
+    `);
+
+
+    /* ========================================================
+       SYSTEM SETTINGS — VALEURS PAR DÉFAUT
+    ======================================================== */
 
     const settings = [
 
@@ -930,21 +1412,32 @@ async function initDatabase() {
 
 
     for (
-        const setting of settings
+        const setting
+        of settings
     ) {
 
         await dbQuery(
             `
             INSERT INTO system_settings
-                (
-                    setting_key,
-                    setting_value
-                )
+            (
+                setting_key,
+                setting_value
+            )
             VALUES
-                ($1, $2)
+            ($1,$2)
+
             ON CONFLICT
-                (setting_key)
-            DO NOTHING
+            (
+                setting_key
+            )
+
+            DO UPDATE SET
+
+                setting_value =
+                    EXCLUDED.setting_value,
+
+                updated_at =
+                    NOW()
             `,
             setting
         );
@@ -952,61 +1445,190 @@ async function initDatabase() {
     }
 
 
-    /*
-     * Ajouter les voix de secours.
-     */
+    /* ========================================================
+       VOIX DE SECOURS
+    ======================================================== */
 
-    for (
-        const voice
-        of FALLBACK_VOICES
+    if (
+        Array.isArray(
+            FALLBACK_VOICES
+        )
     ) {
 
-        await dbQuery(
-            `
-            INSERT INTO voices
-            (
-                external_voice_id,
-                name,
-                provider,
-                gender,
-                language,
-                language_name,
-                description,
-                preview_url,
-                is_active,
-                is_premium
+        for (
+            const voice
+            of FALLBACK_VOICES
+        ) {
+
+            if (
+                !voice ||
+                !voice.external_voice_id
+            ) {
+
+                continue;
+
+            }
+
+
+            await dbQuery(
+                `
+                INSERT INTO voices
+                (
+                    external_voice_id,
+                    name,
+                    provider,
+                    gender,
+                    language,
+                    language_name,
+                    description,
+                    preview_url,
+                    is_active,
+                    is_premium
+                )
+                VALUES
+                (
+                    $1,
+                    $2,
+                    $3,
+                    $4,
+                    $5,
+                    $6,
+                    $7,
+                    $8,
+                    $9,
+                    $10
+                )
+
+                ON CONFLICT
+                (
+                    external_voice_id
+                )
+
+                DO UPDATE SET
+
+                    name =
+                        EXCLUDED.name,
+
+                    provider =
+                        EXCLUDED.provider,
+
+                    gender =
+                        EXCLUDED.gender,
+
+                    language =
+                        EXCLUDED.language,
+
+                    language_name =
+                        EXCLUDED.language_name,
+
+                    description =
+                        EXCLUDED.description,
+
+                    preview_url =
+                        EXCLUDED.preview_url,
+
+                    is_active =
+                        EXCLUDED.is_active,
+
+                    is_premium =
+                        EXCLUDED.is_premium,
+
+                    updated_at =
+                        NOW()
+                `,
+                [
+
+                    voice.external_voice_id,
+
+                    voice.name ||
+                        "Voix BMJ",
+
+                    voice.provider ||
+                        "elevenlabs",
+
+                    voice.gender ||
+                        "unknown",
+
+                    voice.language ||
+                        "",
+
+                    voice.language_name ||
+                        "",
+
+                    voice.description ||
+                        "",
+
+                    voice.preview_url ||
+                        "",
+
+                    voice.is_active !== false,
+
+                    voice.is_premium === true
+
+                ]
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       VÉRIFICATION FINALE
+    ======================================================== */
+
+    const usageColumns =
+        await dbQuery(`
+            SELECT
+                column_name
+            FROM information_schema.columns
+            WHERE
+                table_name = 'usage_records'
+                AND column_name IN
+                (
+                    'characters_used',
+                    'generations_count'
+                )
+            ORDER BY column_name
+        `);
+
+
+    console.log(
+        "Colonnes usage_records :",
+        usageColumns.rows
+            .map(
+                row =>
+                    row.column_name
             )
-            VALUES
-            (
-                $1,$2,$3,$4,$5,
-                $6,$7,$8,$9,$10
-            )
-            ON CONFLICT
-                (external_voice_id)
-            DO UPDATE SET
-                name = EXCLUDED.name,
-                is_active = EXCLUDED.is_active,
-                updated_at = NOW()
-            `,
-            [
-                voice.external_voice_id,
-                voice.name,
-                voice.provider,
-                voice.gender,
-                voice.language,
-                voice.language_name,
-                voice.description,
-                voice.preview_url,
-                voice.is_active,
-                voice.is_premium
-            ]
+            .join(", ")
+    );
+
+
+    /*
+     * Vérification spécifique de generations_count.
+     */
+
+    const generationColumn =
+        usageColumns.rows.some(
+            row =>
+                row.column_name ===
+                "generations_count"
+        );
+
+
+    if (
+        !generationColumn
+    ) {
+
+        throw new Error(
+            "La colonne usage_records.generations_count est introuvable après initialisation."
         );
 
     }
 
 
     console.log(
-        "Base de données initialisée."
+        "Base de données initialisée avec succès."
     );
 
 }
@@ -1025,6 +1647,13 @@ async function logAdminActivity(
 
     try {
 
+        if (!pool) {
+
+            return;
+
+        }
+
+
         await dbQuery(
             `
             INSERT INTO admin_activity
@@ -1036,24 +1665,42 @@ async function logAdminActivity(
                 user_agent
             )
             VALUES
-            ($1,$2,$3,$4,$5)
+            (
+                $1,
+                $2,
+                $3,
+                $4,
+                $5
+            )
             `,
             [
+
                 adminUserId || null,
 
-                action,
+                action ||
+                    "",
 
-                description,
+                description ||
+                    "",
 
-                req.ip || "",
+                req.ip ||
+                    "",
 
                 req.headers[
                     "user-agent"
-                ] || ""
+                ] ||
+                    ""
+
             ]
         );
 
+
     } catch (error) {
+
+        /*
+         * Le journal admin ne doit jamais
+         * faire tomber une autre requête.
+         */
 
         console.error(
             "Erreur journal admin:",
@@ -1086,13 +1733,21 @@ async function authenticate(
             return res
                 .status(401)
                 .json({
-                    success: false,
+
+                    success:
+                        false,
+
                     message:
                         "Token manquant."
+
                 });
 
         }
 
+
+        /*
+         * Vérification JWT.
+         */
 
         const decoded =
             jwt.verify(
@@ -1100,6 +1755,39 @@ async function authenticate(
                 JWT_SECRET
             );
 
+
+        if (
+            !decoded ||
+            !decoded.id
+        ) {
+
+            return res
+                .status(401)
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        "Token invalide."
+
+                });
+
+        }
+
+
+        /*
+         * IMPORTANT :
+         *
+         * On ne demande PAS generations_count
+         * dans users.
+         *
+         * C'est précisément pour éviter
+         * l'erreur :
+         *
+         * column "generations_count"
+         * does not exist
+         */
 
         const result =
             await dbQuery(
@@ -1116,8 +1804,11 @@ async function authenticate(
                     created_at,
                     updated_at,
                     last_login_at
+
                 FROM users
+
                 WHERE id = $1
+
                 LIMIT 1
                 `,
                 [
@@ -1133,9 +1824,13 @@ async function authenticate(
             return res
                 .status(401)
                 .json({
-                    success: false,
+
+                    success:
+                        false,
+
                     message:
                         "Utilisateur introuvable."
+
                 });
 
         }
@@ -1145,21 +1840,33 @@ async function authenticate(
             result.rows[0];
 
 
+        /*
+         * Vérification du compte.
+         */
+
         if (
-            !user.is_active ||
-            user.is_blocked
+            user.is_active === false ||
+            user.is_blocked === true
         ) {
 
             return res
                 .status(403)
                 .json({
-                    success: false,
+
+                    success:
+                        false,
+
                     message:
                         "Compte désactivé ou bloqué."
+
                 });
 
         }
 
+
+        /*
+         * Mettre le compte dans req.user.
+         */
 
         req.user =
             user;
@@ -1170,12 +1877,22 @@ async function authenticate(
 
     } catch (error) {
 
+        console.error(
+            "AUTHENTICATION ERROR:",
+            error.message
+        );
+
+
         return res
             .status(401)
             .json({
-                success: false,
+
+                success:
+                    false,
+
                 message:
-                    "Token invalide."
+                    "Token invalide ou expiré."
+
             });
 
     }
@@ -2213,97 +2930,161 @@ function getMonthKey() {
    USER USAGE
 ============================================================ */
 
+/*
+ * Retourne la clé du mois courant.
+ *
+ * Exemple :
+ * 2026-09
+ */
+function getMonthKey() {
+
+    const now =
+        new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+    return `${year}-${month}`;
+
+}
+
+
+/*
+ * Retourne le quota mensuel
+ * selon le plan de l'utilisateur.
+ */
+function getPlanQuota(plan) {
+
+    const quotas = {
+
+        free:
+            10000,
+
+        standard:
+            100000,
+
+        premium:
+            1000000
+
+    };
+
+    const normalizedPlan =
+        String(
+            plan || "free"
+        )
+        .toLowerCase()
+        .trim();
+
+    return (
+        quotas[
+            normalizedPlan
+        ] ||
+        quotas.free
+    );
+
+}
+
+
+/* ============================================================
+   GET USER USAGE
+============================================================ */
+
 async function getUserUsage(
     userId,
     plan
 ) {
 
-    const monthKey =
-        getMonthKey();
+    try {
+
+        const monthKey =
+            getMonthKey();
+
+        const normalizedPlan =
+            String(
+                plan || "free"
+            )
+            .toLowerCase()
+            .trim();
 
 
-    const quota =
-        getPlanQuota(
-            plan
-        );
-
-
-    const result =
-        await dbQuery(
-            `
-            SELECT
-                characters_used,
-                generations_count
-            FROM usage_records
-            WHERE
-                user_id = $1
-                AND month_key = $2
-            LIMIT 1
-            `,
-            [
-                userId,
-                monthKey
-            ]
-        );
-
-
-    let used =
-        0;
-
-    let generations =
-        0;
-
-
-    if (
-        result.rows.length
-    ) {
-
-        used =
-            Number(
-                result.rows[0]
-                    .characters_used || 0
+        const quota =
+            getPlanQuota(
+                normalizedPlan
             );
 
-        generations =
-            Number(
-                result.rows[0]
-                    .generations_count || 0
+
+        /*
+         * IMPORTANT :
+         *
+         * generations_count appartient
+         * à usage_records.
+         *
+         * On ne cherche surtout PAS
+         * generations_count dans users.
+         */
+
+        const result =
+            await dbQuery(
+                `
+                SELECT
+                    characters_used,
+                    generations_count
+                FROM usage_records
+                WHERE
+                    user_id = $1
+                    AND month_key = $2
+                LIMIT 1
+                `,
+                [
+                    userId,
+                    monthKey
+                ]
             );
 
-    }
+
+        let used =
+            0;
+
+        let generations =
+            0;
 
 
-    return {
+        if (
+            result.rows.length > 0
+        ) {
 
-        plan:
-            plan || "free",
+            used =
+                Number(
+                    result.rows[0]
+                        .characters_used || 0
+                );
 
-        used,
 
-        characters_used:
-            used,
+            generations =
+                Number(
+                    result.rows[0]
+                        .generations_count || 0
+                );
 
-        limit:
-            quota,
+        }
 
-        monthly_limit:
-            quota,
 
-        remaining:
+        const remaining =
             Math.max(
                 0,
                 quota - used
-            ),
+            );
 
-        generations,
 
-        generations_count:
-            generations,
-
-        month:
-            monthKey,
-
-        percentage:
+        const percentage =
             quota > 0
                 ? Math.min(
                     100,
@@ -2313,9 +3094,112 @@ async function getUserUsage(
                     ) *
                     100
                 )
-                : 0
+                : 0;
 
-    };
+
+        return {
+
+            success:
+                true,
+
+            plan:
+                normalizedPlan,
+
+            used,
+
+            characters_used:
+                used,
+
+            limit:
+                quota,
+
+            monthly_limit:
+                quota,
+
+            remaining,
+
+            generations,
+
+            generations_count:
+                generations,
+
+            month:
+                monthKey,
+
+            percentage:
+                Number(
+                    percentage.toFixed(2)
+                )
+
+        };
+
+
+    } catch (error) {
+
+        console.error(
+            "GET USER USAGE ERROR:",
+            error
+        );
+
+
+        /*
+         * On ne bloque pas inutilement
+         * le dashboard si l'usage rencontre
+         * un problème.
+         */
+
+        const normalizedPlan =
+            String(
+                plan || "free"
+            )
+            .toLowerCase()
+            .trim();
+
+
+        const quota =
+            getPlanQuota(
+                normalizedPlan
+            );
+
+
+        return {
+
+            success:
+                false,
+
+            plan:
+                normalizedPlan,
+
+            used:
+                0,
+
+            characters_used:
+                0,
+
+            limit:
+                quota,
+
+            monthly_limit:
+                quota,
+
+            remaining:
+                quota,
+
+            generations:
+                0,
+
+            generations_count:
+                0,
+
+            month:
+                getMonthKey(),
+
+            percentage:
+                0
+
+        };
+
+    }
 
 }
 
@@ -2330,87 +3214,191 @@ async function addUsage(
     characters
 ) {
 
-    const monthKey =
-        getMonthKey();
+    try {
+
+        const monthKey =
+            getMonthKey();
 
 
-    await dbQuery(
-        `
-        INSERT INTO usage_records
-        (
-            user_id,
-            month_key,
-            characters_used,
-            generations_count
-        )
-        VALUES
-        ($1,$2,$3,1)
+        const quota =
+            getPlanQuota(
+                plan
+            );
 
-        ON CONFLICT
-        (
-            user_id,
-            month_key
-        )
 
-        DO UPDATE SET
+        const safeCharacters =
+            Math.max(
+                0,
+                Number(
+                    characters || 0
+                )
+            );
 
-            characters_used =
-                usage_records.characters_used
-                + EXCLUDED.characters_used,
 
-            generations_count =
-                usage_records.generations_count
-                + 1,
+        /*
+         * Enregistre ou met à jour
+         * l'utilisation mensuelle.
+         *
+         * IMPORTANT :
+         *
+         * generations_count est utilisé
+         * uniquement dans usage_records.
+         */
 
-            updated_at =
+        const usageResult =
+            await dbQuery(
+                `
+                INSERT INTO usage_records
+                (
+                    user_id,
+                    month_key,
+                    characters_used,
+                    generations_count,
+                    updated_at
+                )
+                VALUES
+                (
+                    $1,
+                    $2,
+                    $3,
+                    1,
+                    NOW()
+                )
+
+                ON CONFLICT
+                (
+                    user_id,
+                    month_key
+                )
+
+                DO UPDATE SET
+
+                    characters_used =
+                        usage_records.characters_used
+                        +
+                        EXCLUDED.characters_used,
+
+                    generations_count =
+                        usage_records.generations_count
+                        +
+                        1,
+
+                    updated_at =
+                        NOW()
+
+                RETURNING
+                    user_id,
+                    month_key,
+                    characters_used,
+                    generations_count
+                `,
+                [
+                    userId,
+                    monthKey,
+                    safeCharacters
+                ]
+            );
+
+
+        /*
+         * Synchronisation de user_quotas.
+         *
+         * Cette table contient le quota
+         * et les caractères utilisés.
+         */
+
+        const currentUsage =
+            usageResult.rows.length > 0
+                ? Number(
+                    usageResult.rows[0]
+                        .characters_used || 0
+                )
+                : safeCharacters;
+
+
+        await dbQuery(
+            `
+            INSERT INTO user_quotas
+            (
+                user_id,
+                monthly_limit,
+                characters_used,
+                month_key,
+                updated_at
+            )
+            VALUES
+            (
+                $1,
+                $2,
+                $3,
+                $4,
                 NOW()
-        `,
-        [
-            userId,
-            monthKey,
-            characters
-        ]
-    );
+            )
+
+            ON CONFLICT
+            (
+                user_id
+            )
+
+            DO UPDATE SET
+
+                monthly_limit =
+                    EXCLUDED.monthly_limit,
+
+                characters_used =
+                    EXCLUDED.characters_used,
+
+                month_key =
+                    EXCLUDED.month_key,
+
+                updated_at =
+                    NOW()
+            `,
+            [
+                userId,
+                quota,
+                currentUsage,
+                monthKey
+            ]
+        );
 
 
-    await dbQuery(
-        `
-        INSERT INTO user_quotas
-        (
-            user_id,
-            monthly_limit,
-            characters_used,
-            month_key
-        )
-        VALUES
-        ($1,$2,$3,$4)
+        return {
 
-        ON CONFLICT
-        (
-            user_id
-        )
+            success:
+                true,
 
-        DO UPDATE SET
+            characters_used:
+                currentUsage,
 
-            monthly_limit =
-                EXCLUDED.monthly_limit,
+            generations_count:
+                usageResult.rows.length > 0
+                    ? Number(
+                        usageResult.rows[0]
+                            .generations_count || 0
+                    )
+                    : 1,
 
-            characters_used =
-                EXCLUDED.characters_used,
+            monthly_limit:
+                quota,
 
-            month_key =
-                EXCLUDED.month_key,
+            month:
+                monthKey
 
-            updated_at =
-                NOW()
-        `,
-        [
-            userId,
-            getPlanQuota(plan),
-            characters,
-            monthKey
-        ]
-    );
+        };
+
+
+    } catch (error) {
+
+        console.error(
+            "ADD USAGE ERROR:",
+            error
+        );
+
+
+        throw error;
+
+    }
 
 }
 
@@ -2445,6 +3433,12 @@ app.get(
 
         } catch (error) {
 
+            console.error(
+                "GET /api/usage ERROR:",
+                error
+            );
+
+
             res
                 .status(500)
                 .json({
@@ -2453,7 +3447,7 @@ app.get(
                         false,
 
                     message:
-                        error.message
+                        "Impossible de récupérer l'utilisation."
 
                 });
 
@@ -2505,9 +3499,18 @@ app.get(
 
 async function syncElevenLabsVoices() {
 
+    /*
+     * Si aucune clé ElevenLabs n'est configurée,
+     * on ne tente pas d'appel externe.
+     */
+
     if (
         !ELEVENLABS_API_KEY
     ) {
+
+        console.warn(
+            "ELEVENLABS_API_KEY absente. Synchronisation des voix ignorée."
+        );
 
         return [];
 
@@ -2515,6 +3518,11 @@ async function syncElevenLabsVoices() {
 
 
     try {
+
+        console.log(
+            "Synchronisation des voix ElevenLabs..."
+        );
+
 
         const response =
             await fetch(
@@ -2524,17 +3532,35 @@ async function syncElevenLabsVoices() {
                         "GET",
 
                     headers: {
+
                         "xi-api-key":
-                            ELEVENLABS_API_KEY
+                            ELEVENLABS_API_KEY,
+
+                        "Accept":
+                            "application/json"
+
                     }
                 }
             );
 
 
-        if (!response.ok) {
+        if (
+            !response.ok
+        ) {
+
+            const errorText =
+                await response.text()
+                    .catch(
+                        () => ""
+                    );
+
 
             throw new Error(
-                `ElevenLabs voices HTTP ${response.status}`
+                `ElevenLabs voices HTTP ${response.status}${
+                    errorText
+                        ? ` - ${errorText.slice(0, 300)}`
+                        : ""
+                }`
             );
 
         }
@@ -2552,9 +3578,54 @@ async function syncElevenLabsVoices() {
                 : [];
 
 
+        console.log(
+            `${voices.length} voix ElevenLabs reçues.`
+        );
+
+
+        /*
+         * Insérer ou mettre à jour
+         * les voix dans PostgreSQL.
+         */
+
         for (
-            const voice of voices
+            const voice
+            of voices
         ) {
+
+            if (
+                !voice ||
+                !voice.voice_id
+            ) {
+
+                continue;
+
+            }
+
+
+            const labels =
+                voice.labels &&
+                typeof voice.labels === "object"
+                    ? voice.labels
+                    : {};
+
+
+            const gender =
+                labels.gender ||
+                labels.sex ||
+                "unknown";
+
+
+            const language =
+                labels.language ||
+                "";
+
+
+            const languageName =
+                labels.language_name ||
+                labels.language ||
+                "";
+
 
             await dbQuery(
                 `
@@ -2569,12 +3640,22 @@ async function syncElevenLabsVoices() {
                     description,
                     preview_url,
                     is_active,
-                    is_premium
+                    is_premium,
+                    updated_at
                 )
                 VALUES
                 (
-                    $1,$2,$3,$4,$5,
-                    $6,$7,$8,$9,$10
+                    $1,
+                    $2,
+                    $3,
+                    $4,
+                    $5,
+                    $6,
+                    $7,
+                    $8,
+                    $9,
+                    $10,
+                    NOW()
                 )
 
                 ON CONFLICT
@@ -2587,8 +3668,17 @@ async function syncElevenLabsVoices() {
                     name =
                         EXCLUDED.name,
 
+                    provider =
+                        EXCLUDED.provider,
+
                     gender =
                         EXCLUDED.gender,
+
+                    language =
+                        EXCLUDED.language,
+
+                    language_name =
+                        EXCLUDED.language_name,
 
                     description =
                         EXCLUDED.description,
@@ -2596,10 +3686,14 @@ async function syncElevenLabsVoices() {
                     preview_url =
                         EXCLUDED.preview_url,
 
+                    is_active =
+                        EXCLUDED.is_active,
+
                     updated_at =
                         NOW()
                 `,
                 [
+
                     voice.voice_id,
 
                     voice.name ||
@@ -2607,26 +3701,11 @@ async function syncElevenLabsVoices() {
 
                     "elevenlabs",
 
-                    voice.labels &&
-                    (
-                        voice.labels.gender ||
-                        voice.labels.sex
-                    ) ||
-                    "unknown",
+                    gender,
 
-                    voice.labels &&
-                    (
-                        voice.labels.language ||
-                        ""
-                    ) ||
-                    "",
+                    language,
 
-                    voice.labels &&
-                    (
-                        voice.labels.language ||
-                        ""
-                    ) ||
-                    "",
+                    languageName,
 
                     voice.description ||
                         "",
@@ -2637,6 +3716,7 @@ async function syncElevenLabsVoices() {
                     true,
 
                     false
+
                 ]
             );
 
@@ -2645,21 +3725,34 @@ async function syncElevenLabsVoices() {
 
         /*
          * S'assurer que la voix serveur
-         * reste active.
+         * par défaut reste active.
          */
 
-        await dbQuery(
-            `
-            UPDATE voices
-            SET
-                is_active = TRUE,
-                updated_at = NOW()
-            WHERE
-                external_voice_id = $1
-            `,
-            [
-                DEFAULT_VOICE_ID
-            ]
+        if (
+            DEFAULT_VOICE_ID
+        ) {
+
+            await dbQuery(
+                `
+                UPDATE voices
+
+                SET
+                    is_active = TRUE,
+                    updated_at = NOW()
+
+                WHERE
+                    external_voice_id = $1
+                `,
+                [
+                    DEFAULT_VOICE_ID
+                ]
+            );
+
+        }
+
+
+        console.log(
+            "Synchronisation ElevenLabs terminée."
         );
 
 
@@ -2669,16 +3762,21 @@ async function syncElevenLabsVoices() {
     } catch (error) {
 
         console.error(
-            "SYNC ELEVENLABS VOICES:",
+            "SYNC ELEVENLABS VOICES ERROR:",
             error.message
         );
+
+
+        /*
+         * Une erreur ElevenLabs ne doit pas
+         * faire tomber tout le serveur.
+         */
 
         return [];
 
     }
 
 }
-
 
 /* ============================================================
    ADMIN SYNC VOICES
