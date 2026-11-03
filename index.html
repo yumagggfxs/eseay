@@ -3380,7 +3380,28 @@ document.addEventListener(
     "DOMContentLoaded",
     initializeAdmin
 );
+// ACCÈS DIRECT AU TABLEAU DE BORD ADMIN
+document.addEventListener("DOMContentLoaded", () => {
+    const loginPage = document.getElementById("loginPage");
+    const adminApp = document.getElementById("adminApp");
 
+    if (loginPage) {
+        loginPage.style.display = "none";
+    }
+
+    if (adminApp) {
+        adminApp.style.display = "flex";
+    }
+
+    // Charger les données du tableau de bord
+    if (typeof loadDashboardStats === "function") {
+        loadDashboardStats();
+    }
+
+    if (typeof loadSurveys === "function") {
+        loadSurveys();
+    }
+});
 </script>
 
 </body>
